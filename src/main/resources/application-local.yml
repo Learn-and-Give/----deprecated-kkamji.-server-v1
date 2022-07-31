@@ -1,0 +1,12 @@
+spring:
+  config:
+    activate:
+      on-profile: local
+  datasource:
+    url: jdbc:mysql://localhost:3306/kkamji_db?serverTimezone=UTC
+    driver-class-name: com.mysql.cj.jdbc.Driver   # MySQL 연결 설정
+    username: root
+    password: root
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    ddl-auto: validate
