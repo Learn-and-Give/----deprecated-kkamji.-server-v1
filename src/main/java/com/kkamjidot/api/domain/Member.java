@@ -19,7 +19,7 @@ public class Member {
     @Column(name = "member_name")
     private String name;
 
-    @Column(name = "memeber_password")
-    @JsonIgnore
+    @Column(name = "member_password")
+//    @JsonIgnore
     private String password;
 }

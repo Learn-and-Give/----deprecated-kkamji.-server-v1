@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
+@Getter
 @Builder
 public class LoginResponseDto {
     @ApiModelProperty(value = "회원 ID", example = "1", required = true)
