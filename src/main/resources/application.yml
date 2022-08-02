@@ -4,8 +4,3 @@ server:
 spring:
   profiles:
     active: ${active}
-  devtools:
-    livereload:
-      enabled: true   # Live Reload
-#  thymeleaf:
-#    cache: false   # Tymeleaf cache
