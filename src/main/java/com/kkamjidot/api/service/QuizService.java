@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -29,5 +30,10 @@ public class QuizService {
 
         if (quizs.isEmpty()) throw new IllegalArgumentException("문제집에 문제가 없습니다.");
         return quizs;
+    }
+
+    public Quiz findQuizById(Long quizId) {
+        return quizRepository.findById(quizId)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 문제입니다."));
     }
 }
