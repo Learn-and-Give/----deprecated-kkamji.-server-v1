@@ -3,7 +3,7 @@ package com.kkamjidot.api.dto.response;
 import com.kkamjidot.api.domain.Quizbook;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
+import lombok.*;
 
 //@ApiModel(value = "주차별 문제집 모음 조회 응답")
 @Getter
