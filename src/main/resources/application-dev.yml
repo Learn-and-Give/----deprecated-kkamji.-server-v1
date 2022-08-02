@@ -2,13 +2,26 @@ spring:
   config:
     activate:
       on-profile: dev
+  devtools:
+    livereload:
+      enabled: true   # Live Reload
   datasource:
     url: ${db.url}
     driver-class-name: com.mysql.cj.jdbc.Driver   # MySQL 연결 설정
     username: ${db.username}
     password: ${db.password}
   jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
     database-platform: org.hibernate.dialect.MySQL8Dialect
     ddl-auto: validate
-#server:
-#  port: 80    # 애플리케이션 포트 설정
+
+logging:
+  level:
+    org:
+      hibernate:
+        type:
+          descriptor:
+            sql: trace

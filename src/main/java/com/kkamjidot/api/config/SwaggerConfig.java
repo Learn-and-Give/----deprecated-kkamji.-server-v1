@@ -2,6 +2,7 @@ package com.kkamjidot.api.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.function.RouterFunction;
 import org.springframework.web.servlet.function.ServerResponse;
@@ -20,6 +21,7 @@ import java.util.Set;
 import static org.springframework.web.servlet.function.RequestPredicates.GET;
 import static org.springframework.web.servlet.function.RouterFunctions.route;
 
+@Profile({"dev", "local"})
 @Configuration
 @EnableWebMvc
 public class SwaggerConfig {
@@ -33,8 +35,8 @@ public class SwaggerConfig {
     @Bean
     public Docket swaggerApi() {
         return new Docket(DocumentationType.SWAGGER_2)
-//                .consumes(getConsumeContentTypes())
-//                .produces(getProduceContentTypes())
+                .consumes(getConsumeContentTypes())
+                .produces(getProduceContentTypes())
                 .groupName("kkamji.")
                 .apiInfo(this.swaggerInfo())
                 .select()
