@@ -1,8 +1,14 @@
 package com.kkamjidot.api.controller;
 
+import com.kkamjidot.api.domain.Member;
+import com.kkamjidot.api.domain.Quiz;
+import com.kkamjidot.api.dto.response.QuizSummaryResponseDto;
 import com.kkamjidot.api.dto.response.QuizbookDetailResponseDto;
 import com.kkamjidot.api.dto.response.QuizbookResponseDto;
+import com.kkamjidot.api.service.MemberService;
+import com.kkamjidot.api.service.QuizService;
 import com.kkamjidot.api.service.QuizbookService;
+import com.kkamjidot.api.service.SolveService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
@@ -23,6 +29,9 @@ import java.util.List;
 @RestController
 public class QuizbookController {
     private final QuizbookService quizbookService;
+    private final QuizService quizService;
+    private final SolveService solveService;
+    private final MemberService memberService;
 
     @Operation(summary = "주차별 문제집 모음 조회", description = "주차가 주어지면 문제집 제목, 설명, 제작자, 문제수를 반환한다.")
     @ApiResponses(value = {
@@ -46,6 +55,7 @@ public class QuizbookController {
     @Operation(summary = "문제집 상세 조회", description = "문제집 아이디로 문제집 정보와 문제 ")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = QuizbookDetailResponseDto.class))),
+            @ApiResponse(responseCode = "401", description = "UNATHORIZED"),
             @ApiResponse(responseCode = "404", description = "DATA NOT FOUND")
     })
     @Parameters({
@@ -54,6 +64,25 @@ public class QuizbookController {
     })
     @GetMapping("v1/quizbooks/{quizbookId}")
     public ResponseEntity<?> findQuizbook(@RequestHeader(value = "code") String code, @PathVariable(value = "quizbookId") Long quizbookId) {
-        return null;
+        try {
+            Member member = memberService.findOne(code);    // 회원 객체 조회
+
+            // 문제집 상세 정보 응답 객체 생성
+            QuizbookDetailResponseDto quizbookDetail = quizbookService.findQuizbookDetailById(quizbookId);
+            List<Quiz> quizs = quizService.findQuizSummaryByQuizbookId(quizbookId);     // 문제집 내부 문제 리스트 조회
+
+            // 문제를 문제 개요 응답 객체로 변환
+            for (Quiz quiz : quizs) {
+                QuizSummaryResponseDto quizSummary = quizService.findQuizSummaryByQuizId(quiz.getId());
+                if (solveService.isSolved(quiz.getId(), member.getId())) quizSummary.solveQuiz();     // 문제 푼 적이 있으면 체크
+                quizbookDetail.getQuizSummaries().add(quizSummary);
+            }
+
+            return ResponseEntity.ok(quizbookDetail);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();     // DATA NOT FOUND
+        } catch (IllegalStateException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();     // 잘못된 회원 접근
+        }
     }
 }
