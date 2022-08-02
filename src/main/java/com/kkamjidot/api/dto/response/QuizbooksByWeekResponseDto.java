@@ -1,29 +1,28 @@
 package com.kkamjidot.api.dto.response;
 
 import com.kkamjidot.api.domain.Quizbook;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
 //@ApiModel(value = "주차별 문제집 모음 조회 응답")
 @Getter
 public class QuizbooksByWeekResponseDto {
-    @ApiModelProperty(value = "문제집 ID", example = "1", required = true)
+    @Schema(description = "문제집 ID", example = "1", required = true)
     private Long quizbookId;
 
-    @ApiModelProperty(value = "문제집 제목", example = "문제집1 제목", required = true)
+    @Schema(description = "문제집 제목", example = "문제집1 제목", required = true)
     private String quizbookTitle;
 
-    @ApiModelProperty(value = "문제집 설명", example = "문제집1 설명", required = true)
+    @Schema(description = "문제집 설명", example = "문제집1 설명", required = true)
     private String quizbookDescription;
 
-    @ApiModelProperty(value = "문제 수", example = "10", required = true)
+    @Schema(description = "문제 수", example = "10", required = true)
     private Integer numOfQuizzes;
 
-    @ApiModelProperty(value = "문제집 주차", example = "1", required = true)
+    @Schema(description = "문제집 주차", example = "1", required = true)
     private Integer quizbookWeek;
 
-    @ApiModelProperty(value = "제출 회원 이름", example = "홍길동", required = true)
+    @Schema(description = "제출 회원 이름", example = "홍길동", required = true)
     private String submitUserName;
 
     public QuizbooksByWeekResponseDto(Quizbook quizbook) {
