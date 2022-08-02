@@ -1,19 +1,24 @@
 server:
-  port: 8080    # ?????? ?? ??
+  port: 8080
 
 spring:
-  profiles:
-    active: ${active} # ????? ???
+  datasource:
+    url: jdbc:mysql://localhost:3306/kkamji_db?serverTimezone=UTC
+    driver-class-name: com.mysql.cj.jdbc.Driver   # MySQL 연결 설정
+    username: root
+    password: root
   jpa:
-    show-sql: true  # ???? ?? ?? ??
+    show-sql: true
     properties:
       hibernate:
-        format_sql: true    # ???? ???? ??? ???? ?? ???
+        format_sql: true
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    ddl-auto: validate
   devtools:
     livereload:
-      enabled: true   # Live Reload ?? ???
+      enabled: true   # Live Reload
 #  thymeleaf:
-#    cache: false   # Tymeleaf cache ?? ??
+#    cache: false   # Tymeleaf cache
 
 logging:
   level:
@@ -21,5 +26,4 @@ logging:
       hibernate:
         type:
           descriptor:
-            sql: trace    # ??? ???? ???? ??? ???? ??
-
+            sql: trace

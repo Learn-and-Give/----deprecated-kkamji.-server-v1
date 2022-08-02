@@ -15,7 +15,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
-@TestPropertySource(locations = "classpath:application-local.yml")
+//@TestPropertySource(locations = "classpath:application-local.yml")
 @SpringBootTest
 class QuizbookServiceTest {
     @Autowired

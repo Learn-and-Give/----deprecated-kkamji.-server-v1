@@ -12,7 +12,7 @@ import org.springframework.test.context.TestPropertySource;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-@TestPropertySource(locations = "classpath:application-test.yml")
+//@TestPropertySource(locations = "classpath:application-test.yml")
 @SpringBootTest
 class MemberServiceTest {
     @Autowired
