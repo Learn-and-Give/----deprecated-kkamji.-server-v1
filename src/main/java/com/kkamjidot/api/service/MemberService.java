@@ -6,9 +6,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Map;
-import java.util.Optional;
-
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 @Service
@@ -23,5 +20,9 @@ public class MemberService {
 
     public Member findOne(String code) {
         return memberRepository.findByMemberPassword(code).orElseThrow(() -> new IllegalStateException("존재하지 않는 회원입니다."));
+    }
+    
+    public void authorization(String code) {
+       if (!memberRepository.existsByMemberPassword(code)) throw new IllegalStateException("존재하지 않는 회원입니다.");
     }
 }

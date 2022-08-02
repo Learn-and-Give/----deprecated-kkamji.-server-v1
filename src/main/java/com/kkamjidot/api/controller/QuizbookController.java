@@ -45,10 +45,15 @@ public class QuizbookController {
     @GetMapping("v1/quizbooks")
     public ResponseEntity<?> findQuizbooksByWeek(@RequestHeader(value = "code") String code, @RequestParam(value = "week") int week) {
         try {
+            memberService.authorization(code);      // 회원 인가 체크
+
+            // 주차별 문제집 조회
             List<QuizbookResponseDto> quizbooksByWeek = quizbookService.findQuizbooksByWeek(week);
             return ResponseEntity.ok(quizbooksByWeek);
+        } catch (IllegalStateException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();  // UNATHORIZED
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();     // 그 주차에 문제집 없음
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();     // DATA NOT FOUND
         }
     }
 
@@ -65,7 +70,7 @@ public class QuizbookController {
     @GetMapping("v1/quizbooks/{quizbookId}")
     public ResponseEntity<?> findQuizbook(@RequestHeader(value = "code") String code, @PathVariable(value = "quizbookId") Long quizbookId) {
         try {
-            Member member = memberService.findOne(code);    // 회원 객체 조회
+            Member member = memberService.findOne(code);    // 회원 객체 조회 및 인가 체크
 
             // 문제집 상세 정보 응답 객체 생성
             QuizbookDetailResponseDto quizbookDetail = quizbookService.findQuizbookDetailById(quizbookId);
