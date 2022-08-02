@@ -18,7 +18,7 @@ public class Quiz {
     @Column(name = "quiz_id", nullable = false)
     private Long id;
 
-    @Column(name = "quiz_title", nullable = false, length = 50)
+    @Column(name = "quiz_title", length = 50)
     private String quizTitle;
 
     @Lob
@@ -30,7 +30,7 @@ public class Quiz {
     private String quizAnswer;
 
     @Lob
-    @Column(name = "quiz_explanation", nullable = false)
+    @Column(name = "quiz_explanation")
     private String quizExplanation;
 
     @Lob

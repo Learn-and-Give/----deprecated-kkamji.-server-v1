@@ -20,4 +20,8 @@ public class MemberService {
         return memberRepository.findByMemberNameAndMemberPassword(name, password)
                 .orElseThrow(() -> new IllegalStateException("존재하지 않는 회원입니다."));
     }
+
+    public Member findOne(String code) {
+        return memberRepository.findByMemberPassword(code).orElseThrow(() -> new IllegalStateException("존재하지 않는 회원입니다."));
+    }
 }
