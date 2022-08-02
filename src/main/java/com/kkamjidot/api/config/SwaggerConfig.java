@@ -33,8 +33,8 @@ public class SwaggerConfig {
     @Bean
     public Docket swaggerApi() {
         return new Docket(DocumentationType.SWAGGER_2)
-                .consumes(getConsumeContentTypes())
-                .produces(getProduceContentTypes())
+//                .consumes(getConsumeContentTypes())
+//                .produces(getProduceContentTypes())
                 .groupName("kkamji.")
                 .apiInfo(this.swaggerInfo())
                 .select()
@@ -42,8 +42,6 @@ public class SwaggerConfig {
                 .paths(PathSelectors.any())
                 .build();
     }
-
-
 
     private Set<String> getConsumeContentTypes() {
         Set<String> consumes = new HashSet<>();

@@ -5,14 +5,13 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.TestPropertySource;
 
 import java.util.List;
-import java.util.Optional;
 
-import static org.assertj.core.api.Assertions.as;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
+@TestPropertySource(locations = "classpath:application-test.yml")
 @SpringBootTest
 class MemberRepositoryTest {
     @Autowired
@@ -23,8 +22,8 @@ class MemberRepositoryTest {
     public void createMemberTest() {
         //given
         memberRepository.save(Member.builder()
-                .name("홍길동")
-                .password("1234")
+                .memberName("홍길동")
+                .memberPassword("1234")
                 .build());
 
         //when
@@ -32,7 +31,7 @@ class MemberRepositoryTest {
 
         //then
         Member user = usersList.get(0);
-        assertThat(user.getName()).isEqualTo("홍길동");
+        assertThat(user.getMemberName()).isEqualTo("홍길동");
     }
 
     @Test
@@ -40,14 +39,14 @@ class MemberRepositoryTest {
     public void findByNameAndPasswordTest() {
         //given
         memberRepository.save(Member.builder()
-                .name("홍길동")
-                .password("1234")
+                .memberName("홍길동")
+                .memberPassword("1234")
                 .build());
 
         //when
-        Member member = memberRepository.findByNameAndPassword("홍길동", "1234").orElseThrow();
+        Member member = memberRepository.findByMemberNameAndMemberPassword("홍길동", "1234").orElseThrow();
 
         //then
-        assertThat(member.getName()).isEqualTo("홍길동");
+        assertThat(member.getMemberName()).isEqualTo("홍길동");
     }
 }

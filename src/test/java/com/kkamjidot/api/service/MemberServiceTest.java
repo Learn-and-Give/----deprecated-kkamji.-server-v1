@@ -2,16 +2,17 @@ package com.kkamjidot.api.service;
 
 import com.kkamjidot.api.domain.Member;
 import com.kkamjidot.api.repository.MemberRepository;
-import org.aspectj.lang.annotation.After;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.TestPropertySource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+@TestPropertySource(locations = "classpath:application-test.yml")
 @SpringBootTest
 class MemberServiceTest {
     @Autowired
@@ -31,16 +32,16 @@ class MemberServiceTest {
     void loginSuccess() {
         //given
         memberRepository.save(Member.builder()
-                .name("홍길동")
-                .password("1234")
+                .memberName("홍길동")
+                .memberPassword("1234")
                 .build());
 
         //when
         Member member = memberService.login("홍길동", "1234");
 
         //then
-        assertThat(member.getName()).isEqualTo("홍길동");
-        assertThat(member.getPassword()).isEqualTo("1234");
+        assertThat(member.getMemberName()).isEqualTo("홍길동");
+        assertThat(member.getMemberPassword()).isEqualTo("1234");
     }
 
     @Test
@@ -48,8 +49,8 @@ class MemberServiceTest {
     void loginFail() {
         //given
         memberRepository.save(Member.builder()
-                .name("홍길동")
-                .password("1234")
+                .memberName("홍길동")
+                .memberPassword("1234")
                 .build());
 
         //when, then
