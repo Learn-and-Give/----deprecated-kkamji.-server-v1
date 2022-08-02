@@ -17,7 +17,7 @@ public class MemberService {
 
     // 이름과 비밀번호로 회원 조회
     public Member login(String name, String password) {
-        return memberRepository.findByNameAndPassword(name, password)
+        return memberRepository.findByMemberNameAndMemberPassword(name, password)
                 .orElseThrow(() -> new IllegalStateException("존재하지 않는 회원입니다."));
     }
 }

@@ -7,5 +7,5 @@ import java.util.Optional;
 
 public interface MemberRepository extends JpaRepository<Member, Long> {
     //이름과 비밀번호로 회원 조회
-    Optional<Member> findByNameAndPassword(String name, String password);
+    Optional<Member> findByMemberNameAndMemberPassword(String name, String password);
 }

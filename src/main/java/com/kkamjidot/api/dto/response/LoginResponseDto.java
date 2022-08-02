@@ -1,16 +1,16 @@
 package com.kkamjidot.api.dto.response;
 
-import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Getter;
 
+@Schema(name = "로그인 응답 데이터")
 @Getter
 @Builder
 public class LoginResponseDto {
-    @ApiModelProperty(value = "회원 ID", example = "1", required = true)
+    @Schema(description = "회원 ID", example = "1", required = true)
     private final Long userId;
 
-    @ApiModelProperty(value = "이름", example = "홍길동", required = true)
+    @Schema(description = "이름", example = "홍길동", required = true)
     private final String name;
 }
