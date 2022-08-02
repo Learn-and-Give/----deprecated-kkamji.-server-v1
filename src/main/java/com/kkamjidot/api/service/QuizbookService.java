@@ -1,7 +1,7 @@
 package com.kkamjidot.api.service;
 
 import com.kkamjidot.api.domain.Quizbook;
-import com.kkamjidot.api.dto.response.QuizbooksByWeekResponseDto;
+import com.kkamjidot.api.dto.response.QuizbookResponseDto;
 import com.kkamjidot.api.repository.QuizbookRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,9 +17,9 @@ public class QuizbookService {
     private final QuizbookRepository quizbookRepository;
 
     // 주차별 문제집 모음 조회
-    public List<QuizbooksByWeekResponseDto> findQuizbooksByWeek(int week) throws IllegalArgumentException{
+    public List<QuizbookResponseDto> findQuizbooksByWeek(int week) throws IllegalArgumentException{
         // 반환하기 위한 응답 객체 리스트 선언
-        List<QuizbooksByWeekResponseDto> responseDtos = new ArrayList<>();
+        List<QuizbookResponseDto> responseDtos = new ArrayList<>();
 
         // DB에서 데이터 조회
         List<Quizbook> quizbooks = quizbookRepository.findByQuizbookWeek(week);
@@ -31,7 +31,7 @@ public class QuizbookService {
 
         // 주차별 문제집 정보 응답 객체 생성
         for (Quizbook quizbook : quizbooks) {
-            responseDtos.add(new QuizbooksByWeekResponseDto(quizbook));
+            responseDtos.add(new QuizbookResponseDto(quizbook));
         }
         return responseDtos;
     }

@@ -1,20 +1,16 @@
 package com.kkamjidot.api.service;
 
-import com.kkamjidot.api.domain.Member;
-import com.kkamjidot.api.domain.Quizbook;
-import com.kkamjidot.api.dto.response.QuizbooksByWeekResponseDto;
+import com.kkamjidot.api.dto.response.QuizbookResponseDto;
 import com.kkamjidot.api.repository.MemberRepository;
 import com.kkamjidot.api.repository.QuizbookRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.TestPropertySource;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @ActiveProfiles("local")
@@ -69,7 +65,7 @@ class QuizbookServiceTest {
 
         //when//
         //when
-        List<QuizbooksByWeekResponseDto> quizbooks = quizbookService.findQuizbooksByWeek(1);
+        List<QuizbookResponseDto> quizbooks = quizbookService.findQuizbooksByWeek(1);
 
         //then
         System.out.println("quizbooks = " + quizbooks);

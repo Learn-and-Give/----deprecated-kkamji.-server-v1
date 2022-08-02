@@ -1,13 +1,11 @@
 package com.kkamjidot.api.dto.response;
 
+import com.kkamjidot.api.domain.Quizbook;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Getter;
+import lombok.*;
 
-import java.util.ArrayList;
-import java.util.List;
-
+@Schema(name = "주차별 문제집 모음 조회 응답 Dto")
 @Getter
-@Schema(name = "문제집 상세 내용 응답 Dto")
 public class QuizbookResponseDto {
     @Schema(description = "문제집 ID", example = "1", required = true)
     private Long quizbookId;
@@ -27,8 +25,12 @@ public class QuizbookResponseDto {
     @Schema(description = "제출 회원 이름", example = "홍길동", required = true)
     private String submitUserName;
 
-    @Schema(description = "문제 아이디", example = "1", required = true)
-    private Long quizId;
-
-    private List<QuizInQuizbookResponseDto> quizzes = new ArrayList<>();
+    public QuizbookResponseDto(Quizbook quizbook) {
+        this.quizbookId = quizbook.getId();
+        this.quizbookTitle = quizbook.getQuizbookTitle();
+        this.quizbookDescription = quizbook.getQuizbookDescription();
+        this.numOfQuizzes = quizbook.getNumberOfQuizs();
+        this.quizbookWeek = quizbook.getQuizbookWeek();
+        this.submitUserName = quizbook.getMember().getMemberName();
+    }
 }
