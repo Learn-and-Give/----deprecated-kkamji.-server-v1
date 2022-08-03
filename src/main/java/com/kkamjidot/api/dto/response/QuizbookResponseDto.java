@@ -4,8 +4,8 @@ import com.kkamjidot.api.domain.Quizbook;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
-@Schema(name = "주차별 문제집 모음 조회 응답 Dto")
 @Getter
+@Schema(name = "주차별 문제집 모음 조회 응답 Dto")
 public class QuizbookResponseDto {
     @Schema(description = "문제집 ID", example = "1", required = true)
     private Long quizbookId;
