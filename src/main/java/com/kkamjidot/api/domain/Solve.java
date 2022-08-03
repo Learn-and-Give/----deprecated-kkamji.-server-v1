@@ -1,6 +1,7 @@
 package com.kkamjidot.api.domain;
 
 import lombok.*;
+import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
 import java.time.Instant;
@@ -10,19 +11,20 @@ import java.time.Instant;
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
+@DynamicInsert
 @Table(name = "solve")
 public class Solve {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "`solve _id`", nullable = false)
+    @Column(name = "`solve_id`", nullable = false)
     private Long id;
 
     @Lob
     @Column(name = "solve_submitted_answer")
     private String solveSubmittedAnswer;
 
-    @Column(name = "solve_is_correct")
-    private Boolean solveIsCorrect;
+    @Column(name = "solve_is_corrected")
+    private Boolean solveIsCorrected;
 
     @Column(name = "created_date")
     private Instant createdDate;

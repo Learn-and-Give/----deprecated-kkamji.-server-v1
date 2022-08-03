@@ -1,6 +1,5 @@
 package com.kkamjidot.api.controller;
 
-import com.kkamjidot.api.domain.Member;
 import com.kkamjidot.api.domain.Quiz;
 import com.kkamjidot.api.dto.response.QuizSummaryResponseDto;
 import com.kkamjidot.api.dto.response.QuizbookDetailResponseDto;
@@ -24,6 +23,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RequiredArgsConstructor
 @RestController
@@ -51,9 +51,9 @@ public class QuizbookController {
             List<QuizbookResponseDto> quizbooksByWeek = quizbookService.findQuizbooksByWeek(week);
             return ResponseEntity.ok(quizbooksByWeek);
         } catch (IllegalStateException e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();  // UNATHORIZED
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("message", e.getMessage()));  // UNATHORIZED
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();     // DATA NOT FOUND
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("message", e.getMessage()));     // DATA NOT FOUND
         }
     }
 
@@ -70,7 +70,7 @@ public class QuizbookController {
     @GetMapping("v1/quizbooks/{quizbookId}")
     public ResponseEntity<?> findQuizbook(@RequestHeader(value = "code") String code, @PathVariable(value = "quizbookId") Long quizbookId) {
         try {
-            Member member = memberService.findOne(code);    // 회원 객체 조회 및 인가 체크
+            memberService.authorization(code);    // 인가 체크
 
             // 문제집 상세 정보 응답 객체 생성
             QuizbookDetailResponseDto quizbookDetail = quizbookService.findQuizbookDetailById(quizbookId);
@@ -79,15 +79,15 @@ public class QuizbookController {
             // 문제를 문제 개요 응답 객체로 변환
             for (Quiz quiz : quizs) {
                 QuizSummaryResponseDto quizSummary = quizService.findQuizSummaryByQuizId(quiz.getId());
-                if (solveService.isSolved(quiz.getId(), member.getId())) quizSummary.solveQuiz();     // 문제 푼 적이 있으면 체크
+                if (solveService.isSolvedByCode(code, quiz.getId())) quizSummary.solveQuiz();     // 문제 푼 적이 있으면 체크
                 quizbookDetail.getQuizSummaries().add(quizSummary);
             }
 
             return ResponseEntity.ok(quizbookDetail);
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();     // DATA NOT FOUND
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("message", e.getMessage()));     // DATA NOT FOUND
         } catch (IllegalStateException e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();     // 잘못된 회원 접근
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("message", e.getMessage()));     // 잘못된 회원 접근
         }
     }
 }
