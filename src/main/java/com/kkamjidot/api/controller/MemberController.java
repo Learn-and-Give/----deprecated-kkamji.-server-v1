@@ -24,7 +24,7 @@ import java.util.Map;
 public class MemberController {
     private final MemberService memberService;
 
-    @Operation(summary = "로그인", description = "회원 여부를 확인한다.")
+    @Operation(summary = "로그인 API", description = "회원 여부를 확인한다.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = LoginResponseDto.class))),
             @ApiResponse(responseCode = "401", description = "UNATHORIZED")
