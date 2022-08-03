@@ -3,6 +3,7 @@ package com.kkamjidot.api.service;
 import com.kkamjidot.api.domain.Quiz;
 import com.kkamjidot.api.dto.response.QuizSummaryResponseDto;
 import com.kkamjidot.api.repository.QuizRepository;
+import com.kkamjidot.api.repository.SolveRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,6 +16,7 @@ import java.util.Optional;
 @Service
 public class QuizService {
     private final QuizRepository quizRepository;
+    private final SolveRepository solveRepository;
 
     // 문제 개요 반환
     public QuizSummaryResponseDto findQuizSummaryByQuizId(Long quizId) {
