@@ -16,10 +16,9 @@ import java.util.Optional;
 @Service
 public class QuizService {
     private final QuizRepository quizRepository;
-    private final SolveRepository solveRepository;
 
     // 문제 개요 반환
-    public QuizSummaryResponseDto findQuizSummaryByQuizId(Long quizId) {
+    public QuizSummaryResponseDto findQuizSummaryByQuizId(Long quizId) throws IllegalArgumentException {
         // 문제 정보를 가져온 후, 응답 객체에 담아서 반환
         return new QuizSummaryResponseDto(quizRepository.findById(quizId)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 문제입니다.")));
@@ -27,14 +26,14 @@ public class QuizService {
     }
 
     // 문제집 내 문제 목록 반환
-    public List<Quiz> findQuizSummaryByQuizbookId(Long quizbookId) {
+    public List<Quiz> findQuizSummaryByQuizbookId(Long quizbookId) throws IllegalArgumentException{
         List<Quiz> quizs = quizRepository.findByQuizbookId(quizbookId);
 
         if (quizs.isEmpty()) throw new IllegalArgumentException("문제집에 문제가 없습니다.");
         return quizs;
     }
 
-    public Quiz findQuizById(Long quizId) {
+    public Quiz findQuizById(Long quizId) throws IllegalArgumentException {
         return quizRepository.findById(quizId)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 문제입니다."));
     }

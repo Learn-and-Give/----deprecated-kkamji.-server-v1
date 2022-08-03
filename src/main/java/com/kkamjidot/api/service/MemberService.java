@@ -18,11 +18,11 @@ public class MemberService {
                 .orElseThrow(() -> new IllegalStateException("존재하지 않는 회원입니다."));
     }
 
-    public Member findOne(String code) {
+    public Member findOne(String code) throws IllegalStateException {
         return memberRepository.findByMemberPassword(code).orElseThrow(() -> new IllegalStateException("존재하지 않는 회원입니다."));
     }
     
-    public void authorization(String code) {
+    public void authorization(String code) throws IllegalStateException {
        if (!memberRepository.existsByMemberPassword(code)) throw new IllegalStateException("존재하지 않는 회원입니다.");
     }
 }

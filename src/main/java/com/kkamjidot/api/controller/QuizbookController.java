@@ -33,7 +33,7 @@ public class QuizbookController {
     private final SolveService solveService;
     private final MemberService memberService;
 
-    @Operation(summary = "주차별 문제집 모음 조회", description = "주차가 주어지면 문제집 제목, 설명, 제작자, 문제수를 반환한다.")
+    @Operation(summary = "주차별 문제집 모음 조회 API", description = "주차가 주어지면 문제집 제목, 설명, 제작자, 문제수를 반환한다.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "OK", content = @Content(array = @ArraySchema(schema = @Schema(implementation = QuizbookResponseDto.class)))),
             @ApiResponse(responseCode = "404", description = "DATA NOT FOUND")
@@ -57,7 +57,7 @@ public class QuizbookController {
         }
     }
 
-    @Operation(summary = "문제집 상세 조회", description = "문제집 아이디로 문제집 정보와 문제 ")
+    @Operation(summary = "문제집 상세 조회 API", description = "문제집 아이디로 문제집 정보와 문제 ")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = QuizbookDetailResponseDto.class))),
             @ApiResponse(responseCode = "401", description = "UNATHORIZED"),
