@@ -19,26 +19,26 @@ public class Quiz {
     private Long id;
 
     @Column(name = "quiz_title", length = 50)
-    private String quizTitle;
+    private String quizTitle;       // 제목
 
     @Lob
     @Column(name = "quiz_content", nullable = false)
-    private String quizContent;
+    private String quizContent;     // 문제
 
     @Lob
     @Column(name = "quiz_answer", nullable = false)
-    private String quizAnswer;
+    private String quizAnswer;      // 정정
 
     @Lob
     @Column(name = "quiz_explanation")
-    private String quizExplanation;
+    private String quizExplanation; // 해설
 
     @Lob
     @Column(name = "quiz_source")
-    private String quizSource;
+    private String quizSource;      // 출처
 
     @Column(name = "quiz_category", length = 50)
-    private String quizCategory;
+    private String quizCategory;    // 유형(BASIC, ADVANCED, EXAM)
 
     @Column(name = "created_date")
     private Instant createdDate;

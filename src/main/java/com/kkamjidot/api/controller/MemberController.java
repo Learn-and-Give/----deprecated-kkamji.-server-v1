@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.util.Map;
 
 @RequiredArgsConstructor
 @RestController
@@ -38,7 +39,7 @@ public class MemberController {
                     .build();
             return ResponseEntity.ok(response);
         } catch (IllegalStateException e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();     // 존재하지 않는 회원입니다.
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("message", e.getMessage()));     // 존재하지 않는 회원입니다.
         }
     }
 }

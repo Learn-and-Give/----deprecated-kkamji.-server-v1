@@ -6,7 +6,7 @@ import lombok.*;
 import javax.validation.constraints.NotNull;
 
 //DTO 클래스를 사용하여 요청 데이터 정의
-@Schema(name = "로그인 요청 데이터")
+@Schema(name = "로그인 요청 Dto")
 @Builder
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)

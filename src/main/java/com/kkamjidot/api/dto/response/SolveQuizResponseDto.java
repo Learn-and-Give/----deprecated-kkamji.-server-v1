@@ -4,11 +4,10 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Getter;
 
-
 @Getter
 @Builder
-@Schema(name = "퀴즈 풂 여부 조회 응답 Dto")
-public class IsQuizSolvedResponseDto {
+@Schema(name = "퀴즈 풀기 응답 Dto")
+public class SolveQuizResponseDto {
     @Schema(description = "회원 아이디", example = "1", required = true)
     private Long userId;
 
@@ -18,6 +17,6 @@ public class IsQuizSolvedResponseDto {
     @Schema(description = "문제 아이디", example = "1", required = true)
     private Long quizId;
 
-    @Schema(description = "풀었는지 여부", example = "true", required = true)
-    private Boolean quizIsSolved;
+    @Schema(description = "문제 정답 여부", example = "true", required = true)
+    private Boolean solveIsCorrect;
 }
