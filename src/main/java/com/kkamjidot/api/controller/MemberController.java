@@ -12,14 +12,14 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.Map;
 
 @RequiredArgsConstructor
+@CrossOrigin(origins = {"http://localhost:3000", "https://kkamjidot.com"})
+@RequestMapping("v1")
 @RestController
 public class MemberController {
     private final MemberService memberService;
@@ -29,7 +29,7 @@ public class MemberController {
             @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = LoginResponseDto.class))),
             @ApiResponse(responseCode = "401", description = "UNATHORIZED")
     })
-    @PostMapping("v1/login")
+    @PostMapping("login")
     public ResponseEntity<?> login(@RequestBody @Valid LoginRequestDto request) {
         try {
             Member member = memberService.login(request.getName(), request.getCode());  // 로그인

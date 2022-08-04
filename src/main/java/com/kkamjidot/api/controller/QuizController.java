@@ -31,6 +31,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RequiredArgsConstructor
+@CrossOrigin(origins = {"http://localhost:3000", "https://kkamjidot.com"})
 @RequestMapping("v1/quizzes")
 @RestController
 public class QuizController {
