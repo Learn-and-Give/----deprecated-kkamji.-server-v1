@@ -22,8 +22,7 @@ public class Quizbook {
     @Column(name = "quizbook_title")
     private String quizbookTitle;
 
-    @Lob
-    @Column(name = "quizbook_description")
+    @Column(name = "quizbook_description", columnDefinition = "TEXT")
     private String quizbookDescription;
 
     @Column(name = "quizbook_week")

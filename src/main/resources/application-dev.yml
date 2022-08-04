@@ -1,3 +1,6 @@
+server:
+  port: 8081
+
 spring:
   config:
     activate:
@@ -16,7 +19,8 @@ spring:
       hibernate:
         format_sql: true
     database-platform: org.hibernate.dialect.MySQL8Dialect
-    ddl-auto: validate
+    hibernate:
+      ddl-auto: validate
 
 logging:
   level:

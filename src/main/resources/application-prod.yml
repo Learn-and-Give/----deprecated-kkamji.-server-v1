@@ -1,3 +1,6 @@
+server:
+  port: 8082
+
 spring:
   config:
     activate:
@@ -9,4 +12,5 @@ spring:
     password: ${db.password}
   jpa:
     database-platform: org.hibernate.dialect.MySQL8Dialect
-    ddl-auto: validate
+    hibernate:
+      ddl-auto: validate

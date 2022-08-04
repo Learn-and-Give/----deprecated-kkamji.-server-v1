@@ -21,20 +21,16 @@ public class Quiz {
     @Column(name = "quiz_title", length = 50)
     private String quizTitle;       // 제목
 
-    @Lob
-    @Column(name = "quiz_content", nullable = false)
+    @Column(name = "quiz_content", nullable = false, columnDefinition = "TEXT")
     private String quizContent;     // 문제
 
-    @Lob
-    @Column(name = "quiz_answer", nullable = false)
-    private String quizAnswer;      // 정정
+    @Column(name = "quiz_answer", nullable = false, columnDefinition = "TEXT")
+    private String quizAnswer;      // 정답
 
-    @Lob
-    @Column(name = "quiz_explanation")
+    @Column(name = "quiz_explanation", columnDefinition = "TEXT")
     private String quizExplanation; // 해설
 
-    @Lob
-    @Column(name = "quiz_source")
+    @Column(name = "quiz_source", columnDefinition = "TEXT")
     private String quizSource;      // 출처
 
     @Column(name = "quiz_category", length = 50)

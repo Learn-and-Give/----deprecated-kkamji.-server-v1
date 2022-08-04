@@ -19,8 +19,7 @@ public class Solve {
     @Column(name = "`solve_id`", nullable = false)
     private Long id;
 
-    @Lob
-    @Column(name = "solve_submitted_answer")
+    @Column(name = "solve_submitted_answer", columnDefinition = "TEXT")
     private String solveSubmittedAnswer;
 
     @Column(name = "solve_is_corrected")
