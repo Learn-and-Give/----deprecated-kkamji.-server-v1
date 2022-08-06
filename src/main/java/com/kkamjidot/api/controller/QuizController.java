@@ -27,11 +27,10 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.management.openmbean.KeyAlreadyExistsException;
 import javax.validation.Valid;
-import java.util.HashMap;
 import java.util.Map;
 
 @RequiredArgsConstructor
-@CrossOrigin(origins = "*", allowedHeaders = "*") // "http://localhost:3000", "https://kkamjidot.com", "https://www.kkamjidot.com"})
+@CrossOrigin(origins = {"http://localhost:3000", "https://kkamjidot.com", "https://www.kkamjidot.com"}) // @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequestMapping("v1/quizzes")
 @RestController
 public class QuizController {
