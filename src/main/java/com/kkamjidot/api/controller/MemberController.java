@@ -18,7 +18,7 @@ import javax.validation.Valid;
 import java.util.Map;
 
 @RequiredArgsConstructor
-@CrossOrigin(origins = {"http://localhost:3000", "https://kkamjidot.com"})
+@CrossOrigin(origins = {"http://localhost:3000", "https://kkamjidot.com", "https://www.kkamjidot.com"})
 @RequestMapping("v1")
 @RestController
 public class MemberController {
