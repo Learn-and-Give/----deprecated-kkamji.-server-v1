@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.Map;
 
 @RequiredArgsConstructor
-@CrossOrigin(origins = "*") // "http://localhost:3000", "https://kkamjidot.com", "https://www.kkamjidot.com"})
+@CrossOrigin(origins = "*", allowedHeaders = "*") // "http://localhost:3000", "https://kkamjidot.com", "https://www.kkamjidot.com"})
 @RestController
 public class QuizbookController {
     private final QuizbookService quizbookService;
