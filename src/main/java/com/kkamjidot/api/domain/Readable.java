@@ -13,17 +13,14 @@ import java.time.Instant;
 @NoArgsConstructor
 @Getter
 @Entity
-@Table(name = "solve")
-public class Solve {
+@Table(name = "readable")
+public class Readable {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "solve_id", nullable = false)
+    @Column(name = "readable_id", nullable = false)
     private Long id;
 
-    @Column(name = "solve_submitted_answer", columnDefinition = "TEXT")
-    private String solveSubmittedAnswer;
-
-    @Column(name = "solve_is_correct", nullable = false)
-    private Boolean solveIsCorrect = false;
+    @Column(name = "is_readable", nullable = false)
+    private Boolean isReadable = false;
 
     @Column(name = "created_date", columnDefinition = "timestamp default CURRENT_TIMESTAMP")
     private Instant createdDate;
@@ -32,10 +29,10 @@ public class Solve {
     private Instant modifiedDate;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "quiz_id", nullable = false)
-    private Quiz quiz;
-
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "member_id", nullable = false)
     private Member member;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "chapter_id", nullable = false)
+    private Chapter chapter;
 }

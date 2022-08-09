@@ -1,22 +1,22 @@
 package com.kkamjidot.api.domain;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
 
-@Getter
 @Builder
-@AllArgsConstructor(access = AccessLevel.PROTECTED)
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
 @Entity
 @Table(name = "quizbook")
 public class Quizbook {
-    @Id
-    @Column(name = "quizbook_id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "quizbook_id", nullable = false)
     private Long id;
 
     @Column(name = "quizbook_title")
@@ -25,32 +25,23 @@ public class Quizbook {
     @Column(name = "quizbook_description", columnDefinition = "TEXT")
     private String quizbookDescription;
 
-    @Column(name = "quizbook_week")
-    private Integer quizbookWeek;
+    @Column(name = "quizbook_submitted_date")
+    private Instant quizbookSubmittedDate;
 
-    @Column(name = "quizbook_is_submit")
-    private Boolean quizbookIsSubmit;
+    @Column(name = "quizbook_deleted_date")
+    private Instant quizbookDeletedDate;
 
-    @Column(name = "quizbook_submit_date")
-    private Instant quizbookSubmitDate;
-
-    @Column(name = "created_date")
+    @Column(name = "created_date", columnDefinition = "timestamp default CURRENT_TIMESTAMP")
     private Instant createdDate;
 
-    @Column(name = "modified_date")
+    @Column(name = "modified_date", columnDefinition = "timestamp null on update CURRENT_TIMESTAMP")
     private Instant modifiedDate;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id")
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "member_id", nullable = false)
     private Member member;
 
-    @Column(name = "challenge_id")
-    private String challengeId;
-
-    @OneToMany(mappedBy = "quizbook", fetch = FetchType.LAZY)
-    private List<Quiz> quizs = new ArrayList<>();
-
-    public int getNumberOfQuizs() {
-        return quizs.size();
-    }
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "chapter_id")
+    private Chapter chapter;
 }

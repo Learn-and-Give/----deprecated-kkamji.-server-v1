@@ -1,6 +1,7 @@
 package com.kkamjidot.api.dto.response;
 
 import com.kkamjidot.api.domain.Quiz;
+import com.kkamjidot.api.domain.enumerate.QuizCategory;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 
@@ -14,7 +15,7 @@ public class QuizSummaryResponseDto {
     private String quizTitle;
 
     @Schema(description = "문제 유형", example = "BASIC", required = true, defaultValue = "BASIC")
-    private String quizCategory;
+    private QuizCategory quizCategory;
 
     @Schema(description = "풀었는지 여부", example = "true", required = true)
     private Boolean quizIsSolved;

@@ -1,5 +1,6 @@
 package com.kkamjidot.api.dto.response;
 
+import com.kkamjidot.api.domain.Member;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Getter;
@@ -13,4 +14,11 @@ public class LoginResponseDto {
 
     @Schema(description = "이름", example = "홍길동", required = true)
     private final String name;
+
+    public static LoginResponseDto of(final Member member) {
+        return LoginResponseDto.builder()
+                .userId(member.getId())
+                .name(member.getMemberName())
+                .build();
+    }
 }
