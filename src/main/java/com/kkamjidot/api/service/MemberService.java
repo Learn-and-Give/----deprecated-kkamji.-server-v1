@@ -21,11 +21,11 @@ public class MemberService {
                 .orElseThrow(() -> new UnauthorizedException());
     }
 
-    public Member findOne(String code) throws NoSuchElementException {
-        return memberRepository.findByMemberPassword(code).orElseThrow(() -> new NoSuchElementException("존재하지 않는 회원입니다."));
+    public Member findOne(String code) throws UnauthorizedException {
+        return memberRepository.findByMemberPassword(code).orElseThrow(() -> new UnauthorizedException());
     }
     
-    public void authorization(String code) throws IllegalStateException {
-       if (!memberRepository.existsByMemberPassword(code)) throw new NoSuchElementException("존재하지 않는 회원입니다.");
+    public void authorization(String code) throws UnauthorizedException {
+       if (!memberRepository.existsByMemberPassword(code)) throw new UnauthorizedException();
     }
 }

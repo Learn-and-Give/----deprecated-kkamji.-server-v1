@@ -27,7 +27,7 @@
 //import java.util.Map;
 //
 //@RequiredArgsConstructor
-//@CrossOrigin(origins = {"http://localhost:3000", "https://kkamjidot.com", "https://www.kkamjidot.com"}) // @CrossOrigin(origins = "*", allowedHeaders = "*")
+////@CrossOrigin(origins = {"http://localhost:3000", "https://kkamjidot.com", "https://www.kkamjidot.com"}) // @CrossOrigin(origins = "*", allowedHeaders = "*")
 //@RequestMapping("v1/quizzes")
 //@RestController
 //public class QuizController {

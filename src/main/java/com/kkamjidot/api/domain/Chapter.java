@@ -1,9 +1,12 @@
 package com.kkamjidot.api.domain;
 
+import com.kkamjidot.api.repository.MemberRepository;
 import lombok.*;
 
 import javax.persistence.*;
 import java.time.Instant;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 @Builder
 @AllArgsConstructor
@@ -33,4 +36,17 @@ public class Chapter {
 
     @Column(name = "challenge_id")
     private Long challengeId;
+
+    @OneToMany(mappedBy = "chapter")
+    private Set<Readable> readables = new LinkedHashSet<>();
+
+    public boolean isReadable(Member member) {
+        for (Readable readable : this.readables) {
+            if (readable.getMember().equals(member) && readable.getIsReadable()) {
+                return true;
+            }
+        } return false;
+    }
+
+
 }
