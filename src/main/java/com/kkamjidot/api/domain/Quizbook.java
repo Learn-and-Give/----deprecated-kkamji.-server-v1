@@ -58,14 +58,4 @@ public class Quizbook {
     public String getQuizbookMemberName() {
         return this.member.getMemberName();
     }
-
-    public QuizbookResponseDto ofQuizbookResponseDto() {
-        return QuizbookResponseDto.builder()
-                .quizbookId(this.getId())
-                .quizbookTitle(this.getQuizbookTitle())
-                .quizbookDescription(this.getQuizbookDescription())
-                .numOfQuizzes(this.getNumberOfQuizzes())
-                .submitUserName(this.getQuizbookMemberName())
-                .build();
-    }
 }
