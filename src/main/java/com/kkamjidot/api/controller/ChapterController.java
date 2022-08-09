@@ -64,7 +64,7 @@ public class ChapterController {
             @Parameter(name = "chapterId", description = "챕터 아이디", required = true, in = ParameterIn.PATH, example = "1")
     })
     @GetMapping({"{chapterId}"})
-    public ResponseEntity<ChapterResponseDto> readChapters(@RequestHeader(value = "code") String code, @PathVariable(value = "chapterId") Long chapterId) {
+    public ResponseEntity<ChapterResponseDto> readChapter(@RequestHeader(value = "code") String code, @PathVariable(value = "chapterId") Long chapterId) {
         // 회원 객체 조회 및 인가 체크
         Member member = memberService.findOne(code);
 

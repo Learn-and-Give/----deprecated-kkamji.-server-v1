@@ -40,7 +40,7 @@ public class QuizbookController {
             @Parameter(name = "chapterId", description = "챕터 아이디", required = true, in = ParameterIn.PATH, example = "1")
     })
     @GetMapping()
-    public ResponseEntity<List<QuizbookResponseDto>> findQuizbooksByWeek(@RequestHeader(value = "code") String code, @PathVariable(value = "chapterId") Long chapterId) {
+    public ResponseEntity<List<QuizbookResponseDto>> readQuizbooks(@RequestHeader(value = "code") String code, @PathVariable(value = "chapterId") Long chapterId) {
         // 회원 인가 체크
         memberService.authorization(code);
 
@@ -48,7 +48,7 @@ public class QuizbookController {
         List<Quizbook> quizbooks = quizbookService.findQuizbooks(chapterId);
 
         // 응답 반환
-        return ResponseEntity.ok(quizbooks.stream().map(quizbook -> quizbook.ofQuizbookResponseDto()).collect(Collectors.toList()));
+        return ResponseEntity.ok(quizbooks.stream().map(quizbook -> QuizbookResponseDto.of(quizbook)).collect(Collectors.toList()));
     }
 
 //    @Operation(summary = "문제집 상세 조회 API", description = "문제집 아이디로 문제집 정보와 문제 ")

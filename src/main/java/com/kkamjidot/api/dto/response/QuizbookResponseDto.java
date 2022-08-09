@@ -22,4 +22,14 @@ public class QuizbookResponseDto {
 
     @Schema(description = "제출 회원 이름", example = "홍길동", required = true)
     private final String submitUserName;
+
+    public static QuizbookResponseDto of(Quizbook quizbook) {
+        return QuizbookResponseDto.builder()
+                .quizbookId(quizbook.getId())
+                .quizbookTitle(quizbook.getQuizbookTitle())
+                .quizbookDescription(quizbook.getQuizbookDescription())
+                .numOfQuizzes(quizbook.getNumberOfQuizzes())
+                .submitUserName(quizbook.getQuizbookMemberName())
+                .build();
+    }
 }
