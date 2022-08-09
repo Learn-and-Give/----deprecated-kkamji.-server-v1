@@ -20,7 +20,7 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 
 @RequiredArgsConstructor
-@CrossOrigin(origins = {"http://localhost:3000", "https://kkamjidot.com", "https://www.kkamjidot.com"}) // @CrossOrigin(origins = "*", allowedHeaders = "*")
+//@CrossOrigin(origins = {"http://localhost:3000", "https://kkamjidot.com", "https://www.kkamjidot.com"}) // @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequestMapping("v1")
 @RestController
 public class MemberController {
@@ -32,7 +32,7 @@ public class MemberController {
             @ApiResponse(responseCode = "401", description = "UNATHORIZED")
     })
     @PostMapping("login")
-    public ResponseEntity<?> login(@RequestBody @Valid LoginRequestDto request) {
+    public ResponseEntity<LoginResponseDto> login(@RequestBody @Valid LoginRequestDto request) {
         Member member = memberService.login(request.getName(), request.getCode());  // 로그인
         LoginResponseDto response = LoginResponseDto.of(member);
         return ResponseEntity.ok(response);

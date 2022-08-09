@@ -1,5 +1,6 @@
 package com.kkamjidot.api.domain;
 
+import com.kkamjidot.api.dto.response.QuizbookResponseDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -7,6 +8,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.Instant;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 @Builder
 @AllArgsConstructor
@@ -44,4 +47,25 @@ public class Quizbook {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "chapter_id")
     private Chapter chapter;
+
+    @OneToMany(mappedBy = "quizbook")
+    private Set<Quiz> quizzes = new LinkedHashSet<>();
+
+    public int getNumberOfQuizzes() {
+        return this.quizzes.size();
+    }
+
+    public String getQuizbookMemberName() {
+        return this.member.getMemberName();
+    }
+
+    public QuizbookResponseDto ofQuizbookResponseDto() {
+        return QuizbookResponseDto.builder()
+                .quizbookId(this.getId())
+                .quizbookTitle(this.getQuizbookTitle())
+                .quizbookDescription(this.getQuizbookDescription())
+                .numOfQuizzes(this.getNumberOfQuizzes())
+                .submitUserName(this.getQuizbookMemberName())
+                .build();
+    }
 }
