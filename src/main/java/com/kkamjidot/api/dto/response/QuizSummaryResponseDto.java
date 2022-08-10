@@ -7,6 +7,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.time.Instant;
+
 @Getter
 @Builder
 @Schema(name = "문제집 상세 내용 안에 들어가는 문제 개요 모음 응답 Dto")
@@ -24,7 +26,7 @@ public class QuizSummaryResponseDto {
     private final Boolean isQuizSolved;
 
     @Schema(description = "문제집 내 문제 번호", example = "1", required = true)
-    private final int quizNumber;
+    private final Integer quizNumber;
 
     public static QuizSummaryResponseDto of(Quiz quiz, Member member) {
         return QuizSummaryResponseDto.builder()

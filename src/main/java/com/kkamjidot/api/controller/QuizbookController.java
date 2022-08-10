@@ -25,7 +25,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
-@RequestMapping("/v1/chapters/{chapterId}/quizbooks")
+@RequestMapping("v1/chapters/{chapterId}/quizbooks")
 @RestController
 public class QuizbookController {
     private final QuizbookService quizbookService;

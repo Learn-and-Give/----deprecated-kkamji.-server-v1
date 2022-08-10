@@ -18,11 +18,11 @@ public class MemberService {
     // 이름과 비밀번호로 회원 조회
     public Member login(String name, String password) throws NoSuchElementException{
         return memberRepository.findByMemberNameAndMemberPassword(name, password)
-                .orElseThrow(() -> new UserNotFoundException());
+                .orElseThrow(UserNotFoundException::new);
     }
 
     public Member findOne(String code) throws UserNotFoundException {
-        return memberRepository.findByMemberPassword(code).orElseThrow(() -> new UserNotFoundException());
+        return memberRepository.findByMemberPassword(code).orElseThrow(UserNotFoundException::new);
     }
     
     public void authorization(String code) throws UserNotFoundException {

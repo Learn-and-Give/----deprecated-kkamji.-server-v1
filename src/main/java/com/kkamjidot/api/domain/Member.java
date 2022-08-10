@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -16,7 +17,7 @@ import java.time.Instant;
 @Getter
 @Entity
 @Table(name = "member")
-public class Member {
+public class Member extends BaseTimeEntity {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "member_id", nullable = false)
     private Long id;
@@ -47,10 +48,4 @@ public class Member {
 
     @Column(name = "member_image_url")
     private String memberImageUrl;
-
-    @Column(name = "created_date", columnDefinition = "timestamp default CURRENT_TIMESTAMP")
-    private Instant createdDate;
-
-    @Column(name = "modified_date", columnDefinition = "timestamp null on update CURRENT_TIMESTAMP")
-    private Instant modifiedDate;
 }
