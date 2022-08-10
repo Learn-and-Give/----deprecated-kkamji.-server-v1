@@ -1,6 +1,7 @@
 package com.kkamjidot.api.controller;
 
 import com.kkamjidot.api.domain.Member;
+import com.kkamjidot.api.domain.Quiz;
 import com.kkamjidot.api.domain.Quizbook;
 import com.kkamjidot.api.domain.Readable;
 import com.kkamjidot.api.dto.response.QuizbookResponseDto;
@@ -22,10 +23,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
-@RequestMapping("v1/chapters/{chapterId}/quizbooks")
+@RequestMapping("v1/chapters/{chapterId}")
 @RestController
 public class QuizbookController {
     private final QuizbookService quizbookService;
@@ -44,7 +46,7 @@ public class QuizbookController {
             @Parameter(name = "code", description = "로그인한 회원 코드", required = true, in = ParameterIn.HEADER, example = "1234"),
             @Parameter(name = "chapterId", description = "챕터 아이디", required = true, in = ParameterIn.PATH, example = "1")
     })
-    @GetMapping
+    @GetMapping("quizbooks")
     public ResponseEntity<List<QuizbookResponseDto>> readQuizbooks(@RequestHeader(value = "code") String code, @PathVariable(value = "chapterId") Long chapterId) {
         // 회원 객체 조회 및 인가 체크
         Member member = memberService.findOne(code);
@@ -74,7 +76,7 @@ public class QuizbookController {
             @Parameter(name = "chapterId", description = "챕터 아이디", required = true, in = ParameterIn.PATH, example = "1"),
             @Parameter(name = "quizbookId", description = "문제집 아이디", required = true, in = ParameterIn.PATH, example = "1")
     })
-    @GetMapping("{quizbookId}")
+    @GetMapping("quizbooks/{quizbookId}")
     public ResponseEntity<QuizbookResponseDto> readQuizbook(@RequestHeader(value = "code") String code,
                                                             @PathVariable(value = "chapterId") Long chapterId,
                                                             @PathVariable(value = "quizbookId") Long quizbookId) {

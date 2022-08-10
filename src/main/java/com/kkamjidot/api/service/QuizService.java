@@ -27,4 +27,8 @@ public class QuizService {
     public Quiz findOne(Long quizId) throws NoSuchElementException {
         return quizRepository.findById(quizId).orElseThrow(() -> new NoSuchElementException("존재하지 않는 문제입니다."));
     }
+
+    public Quiz findOne(Long quizbookId, Integer quizNumber) throws NoSuchElementException {
+        return quizRepository.findByQuizbookIdAndQuizNumber(quizbookId, quizNumber).orElseThrow(() -> new NoSuchElementException("존재하지 않는 문제입니다."));
+    }
 }
