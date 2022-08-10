@@ -22,7 +22,7 @@
 //
 //    // 문제 풀었는지 아닌지 여부 반환
 //    public boolean isSolved(Long memberId, Long quizId) {
-//        quizRepository.findById(quizId).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 문제입니다."));     // 없는 문제에 대한 예외 처리
+//        quizRepository.findById(quizId).orElseThrow(() -> new NoSuchElementException("존재하지 않는 문제입니다."));     // 없는 문제에 대한 예외 처리
 //        return solveRepository.existsByMemberIdAndQuizId(memberId, quizId);
 //    }
 //
@@ -32,11 +32,11 @@
 //
 //    // 문제 풀기
 //    @Transactional
-//    public Solve solve(String code, Long quizId, boolean isCorrected) throws IllegalStateException, IllegalArgumentException {
+//    public Solve solve(String code, Long quizId, boolean isCorrected) throws NoSuchElementException {
 //        if (isSolvedByCode(code, quizId)) throw new KeyAlreadyExistsException("이미 풀었습니다.");
 //
-//        Member member = memberRepository.findByMemberPassword(code).orElseThrow(() -> new IllegalStateException("존재하지 않는 회원입니다."));
-//        Quiz quiz = quizRepository.findById(quizId).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 문제입니다."));
+//        Member member = memberRepository.findByMemberPassword(code).orElseThrow(() -> new NoSuchElementException("존재하지 않는 회원입니다."));
+//        Quiz quiz = quizRepository.findById(quizId).orElseThrow(() -> new NoSuchElementException("존재하지 않는 문제입니다."));
 //
 //        return solveRepository.save(Solve.builder()
 //                        .solveIsCorrected(isCorrected)

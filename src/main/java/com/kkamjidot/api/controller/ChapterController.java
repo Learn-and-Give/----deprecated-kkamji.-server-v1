@@ -39,7 +39,7 @@ public class ChapterController {
     @Parameters({
             @Parameter(name = "code", description = "로그인한 회원 코드", required = true, in = ParameterIn.HEADER, example = "1234")
     })
-    @GetMapping()
+    @GetMapping
     public ResponseEntity<List<ChapterResponseDto>> readChapters(@RequestHeader(value = "code") String code) {
         // 회원 객체 조회 및 인가 체크
         Member member = memberService.findOne(code);
@@ -47,7 +47,7 @@ public class ChapterController {
         // 챕터 모음 조회
         List<Chapter> chapters = chapterService.findAll();
 
-        // 응답 반환
+        // 응답 객체 생성 및 반환
         return ResponseEntity.ok(chapters.stream()
                 .map(chapter -> ChapterResponseDto.of(chapter, member))
                 .collect(Collectors.toList()));
@@ -71,7 +71,7 @@ public class ChapterController {
         // 챕터 모음 조회
         Chapter chapter = chapterService.findOne(chapterId);
 
-        // 응답 반환
+        // 응답 객체 생성 및 반환
         return ResponseEntity.ok(ChapterResponseDto.of(chapter, member));
     }
 }

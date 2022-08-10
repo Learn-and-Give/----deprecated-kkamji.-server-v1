@@ -6,6 +6,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.time.Instant;
 import java.util.LinkedHashSet;
+import java.util.NoSuchElementException;
 import java.util.Set;
 
 @Builder
@@ -48,5 +49,8 @@ public class Chapter {
         } return false;
     }
 
+    public void verifyApi(Long chapterId) {
+        if (this.id != chapterId) throw new NoSuchElementException("존재하지 않는 챕터입니다.");
+    }
 
 }

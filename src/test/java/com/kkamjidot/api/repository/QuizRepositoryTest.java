@@ -13,6 +13,6 @@
 //
 //    @Test
 //    public void 테스트() {
-//        System.out.println("quizRepository = " + quizRepository.findAll());
+//        System.out.println(quizRepository.findByIdAndQuizbookIdAndChapterId(1L, 1L, 1L));
 //    }
 //}

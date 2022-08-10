@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.time.Instant;
 import java.util.LinkedHashSet;
+import java.util.NoSuchElementException;
 import java.util.Set;
 
 @Builder
@@ -57,5 +58,10 @@ public class Quizbook {
 
     public String getQuizbookMemberName() {
         return this.member.getMemberName();
+    }
+
+    public void verifyApi(Long QuizbookId, Long chapterId) throws NoSuchElementException {
+        if (this.id != QuizbookId) throw new NoSuchElementException("존재하지 않는 챕터입니다.");
+        this.chapter.verifyApi(chapterId);
     }
 }

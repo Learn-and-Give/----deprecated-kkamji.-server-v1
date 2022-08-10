@@ -17,13 +17,15 @@ public class ChapterService {
 
     public List<Chapter> findAll() throws NoSuchElementException {
         List<Chapter> chapters = chapterRepository.findAll();
-        if (chapters.isEmpty()) {
-            throw new NoSuchElementException("존재하지 않는 챕터입니다.");
-        }
+        if (chapters.isEmpty()) throw new NoSuchElementException("존재하지 않는 챕터입니다.");
         return chapters;
     }
 
     public Chapter findOne(Long chapterId) throws NoSuchElementException {
-        return chapterRepository.findById(chapterId).orElseThrow(() -> new NoSuchElementException("챕터가 존재하지 않습니다."));
+        Chapter chapter = chapterRepository.findById(chapterId).orElseThrow(() -> new NoSuchElementException("존재하지 않는 챕터입니다."));
+
+        chapter.verifyApi(chapterId);
+
+        return chapter;
     }
 }
