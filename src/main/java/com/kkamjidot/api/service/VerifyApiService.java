@@ -27,13 +27,13 @@ public class VerifyApiService {
         }
     };
 
-    public void verifyApiQuizToChapter(Quiz quiz, Long chapterId, Long quizbookId) throws NoSuchElementException {
+    public void verifyApiQuizToChapter(Quiz quiz, Long quizbookId, Long chapterId) throws NoSuchElementException {
         Map<String, Long> map = quiz.verifyApi();
 
         System.out.println("map = " + map);
 
-        if (!map.get("chapterId").equals(chapterId) ||
-                !map.get("quizbookId").equals(quizbookId)) {
+        if (!map.get("quizbookId").equals(quizbookId) ||
+                !map.get("chapterId").equals(chapterId)) {
             throw new NoSuchElementException("존재하지 않는 문제입니다.");
         }
     };

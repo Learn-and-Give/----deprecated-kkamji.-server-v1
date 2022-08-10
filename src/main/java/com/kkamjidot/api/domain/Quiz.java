@@ -62,12 +62,20 @@ public class Quiz {
     @OneToMany(mappedBy = "quiz")
     private Set<Solve> solves = new LinkedHashSet<>();
 
+    @OneToMany(mappedBy = "quiz")
+    private Set<File> files = new LinkedHashSet<>();
+
     public boolean getIsSolved(Member member) {
-        return solves.stream()
+        return this.solves.stream()
                 .filter(solve -> solve.getMember().equals(member))
                 .findAny()
                 .isPresent();
     }
+
+    public boolean getIsMine(Member member) {
+        return this.quizbook.getMember().equals(member);
+    }
+
 
     public Map<String, Long> verifyApi() {
         HashMap<String, Long> map = new HashMap<>();
