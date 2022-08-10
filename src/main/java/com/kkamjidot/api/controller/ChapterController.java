@@ -24,7 +24,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
-@RequestMapping("v1/chapters")
+@RequestMapping("v1")
 @RestController
 public class ChapterController {
     private final ChapterService chapterService;
@@ -39,7 +39,7 @@ public class ChapterController {
     @Parameters({
             @Parameter(name = "code", description = "로그인한 회원 코드", required = true, in = ParameterIn.HEADER, example = "1234")
     })
-    @GetMapping
+    @GetMapping("chapters")
     public ResponseEntity<List<ChapterResponseDto>> readChapters(@RequestHeader(value = "code") String code) {
         // 회원 객체 조회 및 인가 체크
         Member member = memberService.findOne(code);
@@ -63,7 +63,7 @@ public class ChapterController {
             @Parameter(name = "code", description = "로그인한 회원 코드", required = true, in = ParameterIn.HEADER, example = "1234"),
             @Parameter(name = "chapterId", description = "챕터 아이디", required = true, in = ParameterIn.PATH, example = "1")
     })
-    @GetMapping("{chapterId}")
+    @GetMapping("chapters/{chapterId}")
     public ResponseEntity<ChapterResponseDto> readChapter(@RequestHeader(value = "code") String code, @PathVariable(value = "chapterId") Long chapterId) {
         // 회원 객체 조회 및 인가 체크
         Member member = memberService.findOne(code);

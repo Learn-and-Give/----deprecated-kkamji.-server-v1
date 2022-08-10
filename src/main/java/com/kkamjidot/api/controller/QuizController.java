@@ -3,9 +3,11 @@ package com.kkamjidot.api.controller;
 import com.kkamjidot.api.domain.File;
 import com.kkamjidot.api.domain.Member;
 import com.kkamjidot.api.domain.Quiz;
+import com.kkamjidot.api.domain.Quizbook;
 import com.kkamjidot.api.dto.response.QuizAnswerResponseDto;
 import com.kkamjidot.api.dto.response.QuizResponseDto;
 import com.kkamjidot.api.dto.response.QuizSummaryResponseDto;
+import com.kkamjidot.api.dto.response.QuizbookResponseDto;
 import com.kkamjidot.api.service.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -21,10 +23,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
-@RequestMapping("v1/chapters/{chapterId}/quizbooks/{quizbookId}/quizzes")
+@RequestMapping("v1/chapters/{chapterId}/quizbooks/{quizbookId}")
 @RestController
 public class QuizController {
     private final MemberService memberService;
@@ -42,9 +45,9 @@ public class QuizController {
     @Parameters({
             @Parameter(name = "code", description = "로그인한 회원 코드", required = true, in = ParameterIn.HEADER, example = "1234"),
             @Parameter(name = "chapterId", description = "챕터 아이디", required = true, in = ParameterIn.PATH, example = "1"),
-            @Parameter(name = "quizbookId", description = "문제집 아이디", required = true, in = ParameterIn.PATH, example = "1")
+            @Parameter(name = "quizbookId", description = "문제집 아이디", required = true, in = ParameterIn.PATH, example = "1"),
     })
-    @GetMapping
+    @GetMapping("quizzes")
     public ResponseEntity<List<QuizSummaryResponseDto>> readQuizSummaries(@RequestHeader(value = "code") String code,
                                                                           @PathVariable(value = "chapterId") Long chapterId,
                                                                           @PathVariable(value = "quizbookId") Long quizbookId) {
@@ -79,7 +82,7 @@ public class QuizController {
             @Parameter(name = "quizbookId", description = "문제집 아이디", required = true, in = ParameterIn.PATH, example = "1"),
             @Parameter(name = "quizId", description = "문제 아이디", required = true, in = ParameterIn.PATH, example = "1")
     })
-    @GetMapping("{quizId}")
+    @GetMapping("quizzes/{quizId}")
     public ResponseEntity<QuizResponseDto> readQuiz(@RequestHeader(value = "code") String code,
                                                     @PathVariable(value = "chapterId") Long chapterId,
                                                     @PathVariable(value = "quizbookId") Long quizbookId,
@@ -113,11 +116,11 @@ public class QuizController {
             @Parameter(name = "quizbookId", description = "문제집 아이디", required = true, in = ParameterIn.PATH, example = "1"),
             @Parameter(name = "quizId", description = "문제 아이디", required = true, in = ParameterIn.PATH, example = "1")
     })
-    @GetMapping("{quizId}/answer")
+    @GetMapping("quizzes/{quizId}/answer")
     public ResponseEntity<QuizAnswerResponseDto> readQuizAnswer(@RequestHeader(value = "code") String code,
-                                                          @PathVariable(value = "chapterId") Long chapterId,
-                                                          @PathVariable(value = "quizbookId") Long quizbookId,
-                                                          @PathVariable(value = "quizId") Long quizId) {
+                                                                @PathVariable(value = "chapterId") Long chapterId,
+                                                                @PathVariable(value = "quizbookId") Long quizbookId,
+                                                                @PathVariable(value = "quizId") Long quizId) {
         // 회원 객체 조회 및 인가 체크
         Member member = memberService.findOne(code);
 
@@ -127,40 +130,45 @@ public class QuizController {
         // 문제 조회
         Quiz quiz = quizService.findOne(quizId);
 
+
         // api 검증
         verifyApiService.verifyApiQuizToChapter(quiz, quizbookId, chapterId);
 
         // 응답 객체 생성 및 반환
         return ResponseEntity.ok(QuizAnswerResponseDto.of(quiz));
     }
-//
-//    @Operation(summary = "문제 풂 여부 조회 API", description = "푼 문제인지 확인한다.")
-//    @ApiResponses(value = {
-//            @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = IsQuizSolvedResponseDto.class))),
-//            @ApiResponse(responseCode = "401", description = "UNATHORIZED"),
-//            @ApiResponse(responseCode = "404", description = "DATA NOT FOUND")
-//    })
-//    @Parameters({
-//            @Parameter(name = "code", description = "로그인한 회원 코드", required = true, in = ParameterIn.HEADER, example = "1234"),
-//            @Parameter(name = "quizId", description = "문제 아이디", required = true, in = ParameterIn.PATH, example = "1")
-//    })
-//    @GetMapping("{quizId}/is-solved")
-//    public ResponseEntity<?> isQuizSolved(@RequestHeader(value = "code") String code, @PathVariable(value = "quizId") Long quizId) {
-//        try {
-//            Member member = memberService.findOne(code);    // 회원 객체 조회 및 인가 체크
-//
-//            // 응답 반환
-//            return ResponseEntity.ok(IsQuizSolvedResponseDto.builder()
-//                    .userId(member.getId())
-//                    .userName(member.getMemberName())
-//                    .quizId(quizId)
-//                    .quizIsSolved(solveService.isSolved(member.getId(), quizId))    // 문제 풂 여부 조회
-//                    .build());
-//        } catch (IllegalStateException e) {
-//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("message", e.getMessage()));  // UNATHORIZED
-//        } catch (IllegalArgumentException e) {
-//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("message", e.getMessage()));     // DATA NOT FOUND
-//        }
-//    }
-//
+
+    @Operation(summary = "문제집의 n번째 문제 아이디 반환 API", description = "한 문제집의 n번째 문제가 무슨 문제인지 조회한다.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(example = "{quizId: 1}"))),
+            @ApiResponse(responseCode = "401", description = "UNATHORIZED", content = @Content(schema = @Schema(example = "{message: 존재하지 않는 회원입니다.}"))),
+            @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content(schema = @Schema(example = "{message: 열람할 수 없는 문제집입니다.}"))),
+            @ApiResponse(responseCode = "404", description = "DATA NOT FOUND", content = @Content(schema = @Schema(example = "{message: 존재하지 않는 문제집입니다.}")))
+    })
+    @Parameters({
+            @Parameter(name = "code", description = "로그인한 회원 코드", required = true, in = ParameterIn.HEADER, example = "1234"),
+            @Parameter(name = "chapterId", description = "챕터 아이디", required = true, in = ParameterIn.PATH, example = "1"),
+            @Parameter(name = "quizbookId", description = "문제집 아이디", required = true, in = ParameterIn.PATH, example = "1"),
+            @Parameter(name = "number", description = "순서", required = false, in = ParameterIn.QUERY, example = "1")
+    })
+    @GetMapping("quizzes/search")
+    public ResponseEntity<Map<String, Long>> readQuizId(@RequestHeader(value = "code") String code,
+                                                            @PathVariable(value = "chapterId") Long chapterId,
+                                                            @PathVariable(value = "quizbookId") Long quizbookId,
+                                                            @RequestParam(value = "number", required = false, defaultValue = "1") Integer number) {
+        // 회원 객체 조회 및 인가 체크
+        Member member = memberService.findOne(code);
+
+        // 열람할 수 있는 챕터 체크
+        readableService.isReadable(chapterId, member);
+
+        // 문제 조회
+        Quiz quiz = quizService.findOne(quizbookId, number);
+
+        // api 검증
+        verifyApiService.verifyApiQuizToChapter(quiz, quizbookId, chapterId);
+
+        // 응답 객체 생성 및 반환
+        return ResponseEntity.ok(Map.of("quizId", quiz.getId()));
+    }
 }
