@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.time.Instant;
@@ -19,7 +20,7 @@ import java.util.Set;
 @Getter
 @Entity
 @Table(name = "quiz")
-public class Quiz {
+public class Quiz extends BaseTimeEntity {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "quiz_id", nullable = false)
     private Long id;
@@ -40,7 +41,8 @@ public class Quiz {
     private String quizSource;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "quiz_category", length = 50, columnDefinition = "varchar(50) default 'BASIC'")
+    @Column(name = "quiz_category", length = 50)
+    @ColumnDefault("BASIC")
     private QuizCategory quizCategory;
 
     @Column(name = "quiz_number", nullable = false)
@@ -48,12 +50,6 @@ public class Quiz {
 
     @Column(name = "quiz_deleted_date")
     private Instant quizDeletedDate;
-
-    @Column(name = "created_date", columnDefinition = "timestamp default CURRENT_TIMESTAMP")
-    private Instant createdDate;
-
-    @Column(name = "modified_date", columnDefinition = "timestamp null on update CURRENT_TIMESTAMP")
-    private Instant modifiedDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "quizbook_id")

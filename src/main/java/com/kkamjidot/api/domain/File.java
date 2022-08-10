@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.time.Instant;
@@ -14,7 +15,7 @@ import java.time.Instant;
 @Getter
 @Entity
 @Table(name = "file")
-public class File {
+public class File extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "file_id", nullable = false)
@@ -28,12 +29,6 @@ public class File {
 
     @Column(name = "file_path", nullable = false)
     private String filePath;
-
-    @Column(name = "created_date", nullable = false)
-    private Instant createdDate;
-
-    @Column(name = "modified_date")
-    private Instant modifiedDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "quiz_id")

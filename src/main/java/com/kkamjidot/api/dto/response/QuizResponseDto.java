@@ -29,7 +29,7 @@ public class QuizResponseDto {
     private final QuizCategory quizCategory;
 
     @Schema(description = "문제집 내 문제 번호", example = "1", required = true)
-    private final int quizNumber;
+    private final Integer quizNumber;
 
     @Schema(description = "풀었는지 여부", example = "true", required = true)
     private final Boolean isQuizSolved;

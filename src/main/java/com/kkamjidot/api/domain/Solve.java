@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.time.Instant;
@@ -14,7 +15,7 @@ import java.time.Instant;
 @Getter
 @Entity
 @Table(name = "solve")
-public class Solve {
+public class Solve extends BaseTimeEntity {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "solve_id", nullable = false)
     private Long id;
@@ -23,13 +24,8 @@ public class Solve {
     private String solveSubmittedAnswer;
 
     @Column(name = "solve_is_correct", nullable = false)
-    private Boolean solveIsCorrect = false;
-
-    @Column(name = "created_date", columnDefinition = "timestamp default CURRENT_TIMESTAMP")
-    private Instant createdDate;
-
-    @Column(name = "modified_date", columnDefinition = "timestamp null on update CURRENT_TIMESTAMP")
-    private Instant modifiedDate;
+    @ColumnDefault("false")
+    private Boolean solveIsCorrect;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "quiz_id", nullable = false)
