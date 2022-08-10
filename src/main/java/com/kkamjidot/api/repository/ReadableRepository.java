@@ -5,5 +5,5 @@ import com.kkamjidot.api.domain.Readable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ReadableRepository extends JpaRepository<Readable, Long> {
-    boolean existsByChapterIdAndMember(Long chapterId, Member member);   // 열람 가능 여부 검사
+    boolean existsByChapterIdAndMemberAndIsReadable(Long chapterId, Member member, boolean isReadable);   // 열람 가능 여부 검사
 }

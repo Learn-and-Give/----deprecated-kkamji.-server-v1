@@ -26,10 +26,8 @@ public class QuizbookService {
         return quizbooks;
     }
 
-    public Quizbook findOne(Long quizbookId, Long chapterId) throws NoSuchElementException {
+    public Quizbook findOne(Long quizbookId) throws NoSuchElementException {
         Quizbook quizbook = quizbookRepository.findById(quizbookId).orElseThrow(() -> new NoSuchElementException("존재하지 않는 문제집입니다."));
-
-        quizbook.verifyApi(quizbookId, chapterId);
 
         return quizbook;
     }

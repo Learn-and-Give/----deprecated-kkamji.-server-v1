@@ -1,38 +1,26 @@
-//package com.kkamjidot.api.service;
-//
-//import com.kkamjidot.api.domain.Quiz;
-//import com.kkamjidot.api.dto.response.QuizSummaryResponseDto;
-//import com.kkamjidot.api.repository.QuizRepository;
-//import lombok.RequiredArgsConstructor;
-//import org.springframework.stereotype.Service;
-//import org.springframework.transaction.annotation.Transactional;
-//
-//import java.util.List;
-//
-//@RequiredArgsConstructor
-//@Transactional(readOnly = true)
-//@Service
-//public class QuizService {
-//    private final QuizRepository quizRepository;
-//
-//    // 문제 개요 반환
-//    public QuizSummaryResponseDto findQuizSummaryByQuizId(Long quizId) throws NoSuchElementException {
-//        // 문제 정보를 가져온 후, 응답 객체에 담아서 반환
-//        return new QuizSummaryResponseDto(quizRepository.findById(quizId)
-//                .orElseThrow(() -> new NoSuchElementException("존재하지 않는 문제입니다.")));
-//
-//    }
-//
-//    // 문제집 내 문제 목록 반환
-//    public List<Quiz> findQuizSummaryByQuizbookId(Long quizbookId) throws NoSuchElementException{
-//        List<Quiz> quizs = quizRepository.findByQuizbookId(quizbookId);
-//
-//        if (quizs.isEmpty()) throw new NoSuchElementException("문제집에 문제가 없습니다.");
-//        return quizs;
-//    }
-//
-//    public Quiz findQuizById(Long quizId) throws NoSuchElementException {
-//        return quizRepository.findById(quizId)
-//                .orElseThrow(() -> new NoSuchElementException("존재하지 않는 문제입니다."));
-//    }
-//}
+package com.kkamjidot.api.service;
+
+import com.kkamjidot.api.domain.Quiz;
+import com.kkamjidot.api.repository.QuizRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.NoSuchElementException;
+
+@RequiredArgsConstructor
+@Transactional(readOnly = true)
+@Service
+public class QuizService {
+    private final QuizRepository quizRepository;
+
+    // 문제 모음 반환
+    public List<Quiz> findQuizzes(Long quizbookId, Long chapterId) throws NoSuchElementException {
+        List<Quiz> quizzes = quizRepository.findAllByQuizbookIdOrderByQuizNumber(quizbookId);
+
+        if (quizzes.isEmpty()) throw new NoSuchElementException("존재하지 않는 문제입니다.");
+
+        return quizzes;
+    }
+}

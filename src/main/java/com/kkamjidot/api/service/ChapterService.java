@@ -24,8 +24,6 @@ public class ChapterService {
     public Chapter findOne(Long chapterId) throws NoSuchElementException {
         Chapter chapter = chapterRepository.findById(chapterId).orElseThrow(() -> new NoSuchElementException("존재하지 않는 챕터입니다."));
 
-        chapter.verifyApi(chapterId);
-
         return chapter;
     }
 }

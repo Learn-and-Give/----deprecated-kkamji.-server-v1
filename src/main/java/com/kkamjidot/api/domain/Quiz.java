@@ -8,6 +8,10 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.Instant;
+import java.util.HashMap;
+import java.util.LinkedHashSet;
+import java.util.Map;
+import java.util.Set;
 
 @Builder
 @AllArgsConstructor
@@ -39,8 +43,8 @@ public class Quiz {
     @Column(name = "quiz_category", length = 50, columnDefinition = "varchar(50) default 'BASIC'")
     private QuizCategory quizCategory;
 
-    @Column(name = "quiz_order", nullable = false)
-    private Integer quizOrder;
+    @Column(name = "quiz_number", nullable = false)
+    private Integer quizNumber;
 
     @Column(name = "quiz_deleted_date")
     private Instant quizDeletedDate;
@@ -54,4 +58,21 @@ public class Quiz {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "quizbook_id")
     private Quizbook quizbook;
+
+    @OneToMany(mappedBy = "quiz")
+    private Set<Solve> solves = new LinkedHashSet<>();
+
+    public boolean getIsSolved(Member member) {
+        return solves.stream()
+                .filter(solve -> solve.getMember().equals(member))
+                .findAny()
+                .isPresent();
+    }
+
+    public Map<String, Long> verifyApi() {
+        HashMap<String, Long> map = new HashMap<>();
+        map.put("quizId", this.id);
+        map.putAll(this.quizbook.verifyApi());
+        return map;
+    }
 }

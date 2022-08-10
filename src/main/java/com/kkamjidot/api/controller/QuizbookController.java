@@ -7,6 +7,7 @@ import com.kkamjidot.api.dto.response.QuizbookResponseDto;
 import com.kkamjidot.api.service.MemberService;
 import com.kkamjidot.api.service.QuizbookService;
 import com.kkamjidot.api.service.ReadableService;
+import com.kkamjidot.api.service.VerifyApiService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
@@ -30,6 +31,7 @@ public class QuizbookController {
     private final QuizbookService quizbookService;
     private final MemberService memberService;
     private final ReadableService readableService;
+    private final VerifyApiService verifyApiService;
 
     @Operation(summary = "챕터별 문제집 모음 조회 API", description = "챕터가 주어지면 문제집 제목, 설명, 제작자, 문제수를 반환한다.")
     @ApiResponses(value = {
@@ -52,6 +54,9 @@ public class QuizbookController {
 
         // 주차별 문제집 조회
         List<Quizbook> quizbooks = quizbookService.findQuizbooks(chapterId);
+
+        // api 검증
+        verifyApiService.verifyApiQuizbookToChapter(quizbooks.get(0), chapterId);
 
         // 응답 객체 생성 및 반환
         return ResponseEntity.ok(quizbooks.stream().map(quizbook -> QuizbookResponseDto.of(quizbook)).collect(Collectors.toList()));
@@ -80,7 +85,10 @@ public class QuizbookController {
         readableService.isReadable(chapterId, member);
 
         // 문제집 정보 조회
-        Quizbook quizbook = quizbookService.findOne(quizbookId, chapterId);
+        Quizbook quizbook = quizbookService.findOne(quizbookId);
+
+        // api 검증
+        verifyApiService.verifyApiQuizbookToChapter(quizbook, chapterId);
 
         // 응답 객체 생성 및 반환
         return ResponseEntity.ok(QuizbookResponseDto.of(quizbook));

@@ -5,9 +5,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.Instant;
-import java.util.LinkedHashSet;
-import java.util.NoSuchElementException;
-import java.util.Set;
+import java.util.*;
 
 @Builder
 @AllArgsConstructor
@@ -49,8 +47,14 @@ public class Chapter {
         } return false;
     }
 
-    public void verifyApi(Long chapterId) {
-        if (this.id != chapterId) throw new NoSuchElementException("존재하지 않는 챕터입니다.");
+    public Map<String, Long> verifyApi() {
+        Map<String, Long> map = new HashMap<>();
+        map.put("chapterId", this.id);
+        return map;
     }
+
+//    public void verifyApi(Long chapterId) {
+//        if (this.id != chapterId) throw new NoSuchElementException("존재하지 않는 챕터입니다.");
+//    }
 
 }
