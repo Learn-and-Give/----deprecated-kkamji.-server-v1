@@ -9,7 +9,7 @@ spring:
     livereload:
       enabled: true   # Live Reload
   datasource:
-    url: ${db.url}
+    url: jdbc:mysql://${db.url}?serverTimezone=Asia/Seoul
     driver-class-name: com.mysql.cj.jdbc.Driver   # MySQL 연결 설정
     username: ${db.username}
     password: ${db.password}

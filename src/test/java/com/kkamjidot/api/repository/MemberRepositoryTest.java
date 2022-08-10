@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.TestPropertySource;
 
 import java.util.List;
 
@@ -39,10 +38,7 @@ class MemberRepositoryTest {
     @DisplayName("이름과 비밀번호로 회원 정보 조회 테스트")
     public void findByNameAndPasswordTest() {
         //given
-        memberRepository.save(Member.builder()
-                .memberName("홍길동")
-                .memberPassword("1234")
-                .build());
+        memberRepository.save(Member.builder().memberName("홍길동").memberPassword("1234").build());
 
         //when
         Member member = memberRepository.findByMemberNameAndMemberPassword("홍길동", "1234").orElseThrow();

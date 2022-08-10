@@ -1,10 +1,13 @@
 package com.kkamjidot.api.service;
 
 import com.kkamjidot.api.domain.Member;
+import com.kkamjidot.api.exception.UserNotFoundException;
 import com.kkamjidot.api.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.NoSuchElementException;
 
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -13,16 +16,16 @@ public class MemberService {
     private final MemberRepository memberRepository;
 
     // 이름과 비밀번호로 회원 조회
-    public Member login(String name, String password) {
+    public Member login(String name, String password) throws NoSuchElementException{
         return memberRepository.findByMemberNameAndMemberPassword(name, password)
-                .orElseThrow(() -> new IllegalStateException("존재하지 않는 회원입니다."));
+                .orElseThrow(UserNotFoundException::new);
     }
 
-    public Member findOne(String code) throws IllegalStateException {
-        return memberRepository.findByMemberPassword(code).orElseThrow(() -> new IllegalStateException("존재하지 않는 회원입니다."));
+    public Member findOne(String code) throws UserNotFoundException {
+        return memberRepository.findByMemberPassword(code).orElseThrow(UserNotFoundException::new);
     }
     
-    public void authorization(String code) throws IllegalStateException {
-       if (!memberRepository.existsByMemberPassword(code)) throw new IllegalStateException("존재하지 않는 회원입니다.");
+    public void authorization(String code) throws UserNotFoundException {
+       if (!memberRepository.existsByMemberPassword(code)) throw new UserNotFoundException();
     }
 }

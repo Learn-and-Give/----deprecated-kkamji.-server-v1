@@ -1,32 +1,40 @@
 package com.kkamjidot.api.dto.response;
 
+import com.kkamjidot.api.domain.Member;
 import com.kkamjidot.api.domain.Quiz;
+import com.kkamjidot.api.domain.enumerate.QuizCategory;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Builder;
 import lombok.Getter;
 
+import java.time.Instant;
+
 @Getter
+@Builder
 @Schema(name = "문제집 상세 내용 안에 들어가는 문제 개요 모음 응답 Dto")
 public class QuizSummaryResponseDto {
     @Schema(description = "문제 아이디", example = "1", required = true)
-    private Long quizId;
+    private final Long quizId;
 
     @Schema(description = "문제 제목", example = "문제1 제목", required = true)
-    private String quizTitle;
+    private final String quizTitle;
 
     @Schema(description = "문제 유형", example = "BASIC", required = true, defaultValue = "BASIC")
-    private String quizCategory;
+    private final QuizCategory quizCategory;
 
     @Schema(description = "풀었는지 여부", example = "true", required = true)
-    private Boolean quizIsSolved;
+    private final Boolean isQuizSolved;
 
-    public QuizSummaryResponseDto(Quiz quiz) {
-        this.quizId = quiz.getId();
-        this.quizTitle = quiz.getQuizTitle();
-        this.quizCategory = quiz.getQuizCategory();
-        this.quizIsSolved = false;
-    }
+    @Schema(description = "문제집 내 문제 번호", example = "1", required = true)
+    private final Integer quizNumber;
 
-    public void solveQuiz() {
-        this.quizIsSolved = true;
+    public static QuizSummaryResponseDto of(Quiz quiz, Member member) {
+        return QuizSummaryResponseDto.builder()
+                .quizId(quiz.getId())
+                .quizTitle(quiz.getQuizTitle())
+                .quizCategory(quiz.getQuizCategory())
+                .isQuizSolved(quiz.getIsSolved(member))
+                .quizNumber(quiz.getQuizNumber())
+                .build();
     }
 }
