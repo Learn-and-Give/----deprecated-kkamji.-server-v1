@@ -8,6 +8,7 @@ import lombok.Builder;
 import lombok.Getter;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
 
 @Getter
 @Builder
@@ -28,6 +29,12 @@ public class QuizSummaryResponseDto {
     @Schema(description = "문제집 내 문제 번호", example = "1", required = true)
     private final Integer quizNumber;
 
+    @Schema(description = "생성일시", example = "2022-08-11T16:47:25", required = true)
+    private LocalDateTime createdDate;
+
+    @Schema(description = "수정일시", example = "null", required = true)
+    private LocalDateTime modifiedDate;
+
     public static QuizSummaryResponseDto of(Quiz quiz, Member member) {
         return QuizSummaryResponseDto.builder()
                 .quizId(quiz.getId())
@@ -35,6 +42,7 @@ public class QuizSummaryResponseDto {
                 .quizCategory(quiz.getQuizCategory())
                 .isQuizSolved(quiz.getIsSolved(member))
                 .quizNumber(quiz.getQuizNumber())
-                .build();
+                .createdDate(quiz.getCreatedDate())
+                .modifiedDate(quiz.getModifiedDate()).build();
     }
 }

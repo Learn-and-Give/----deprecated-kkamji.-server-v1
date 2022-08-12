@@ -29,7 +29,7 @@ public class MemberController {
     @Operation(summary = "로그인 API", description = "회원 여부를 확인한다.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = LoginResponseDto.class))),
-            @ApiResponse(responseCode = "401", description = "UNATHORIZED")
+            @ApiResponse(responseCode = "401", description = "UNAUTHORIZED", content = @Content(schema = @Schema(example = "{message: 존재하지 않는 회원입니다.}")))
     })
     @PostMapping("login")
     public ResponseEntity<LoginResponseDto> login(@RequestBody @Valid LoginRequestDto request) {

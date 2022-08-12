@@ -61,7 +61,7 @@ public class Quizbook extends BaseTimeEntity {
     }
 
 //    public void verifyApi(Long QuizbookId, Long chapterId) throws NoSuchElementException {
-//        if (this.id != QuizbookId) throw new NoSuchElementException("존재하지 않는 챕터입니다.");
+//        if (!Objects.equals(this.id, QuizbookId)) throw new NoSuchElementException("존재하지 않는 문제입니다.");
 //        this.chapter.verifyApi(chapterId);
 //    }
 }

@@ -4,6 +4,8 @@ import com.kkamjidot.api.domain.Quizbook;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Builder
 @Schema(name = "주차별 문제집 모음 조회 응답 Dto")
@@ -23,6 +25,12 @@ public class QuizbookResponseDto {
     @Schema(description = "제출 회원 이름", example = "홍길동", required = true)
     private final String submitUserName;
 
+    @Schema(description = "생성일시", example = "2022-08-11T16:47:25", required = true)
+    private LocalDateTime createdDate;
+
+    @Schema(description = "수정일시", example = "null", required = true)
+    private LocalDateTime modifiedDate;
+
     public static QuizbookResponseDto of(Quizbook quizbook) {
         return QuizbookResponseDto.builder()
                 .quizbookId(quizbook.getId())
@@ -30,6 +38,7 @@ public class QuizbookResponseDto {
                 .quizbookDescription(quizbook.getQuizbookDescription())
                 .numOfQuizzes(quizbook.getNumberOfQuizzes())
                 .submitUserName(quizbook.getQuizbookMemberName())
-                .build();
+                .createdDate(quizbook.getCreatedDate())
+                .modifiedDate(quizbook.getModifiedDate()).build();
     }
 }

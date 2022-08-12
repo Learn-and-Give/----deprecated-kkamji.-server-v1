@@ -4,6 +4,8 @@ import com.kkamjidot.api.domain.Member;
 import com.kkamjidot.api.domain.Quiz;
 import com.kkamjidot.api.domain.Quizbook;
 import com.kkamjidot.api.domain.Readable;
+import com.kkamjidot.api.dto.request.LoginRequestDto;
+import com.kkamjidot.api.dto.request.UpdateAnswerRequestDto;
 import com.kkamjidot.api.dto.response.QuizbookResponseDto;
 import com.kkamjidot.api.service.MemberService;
 import com.kkamjidot.api.service.QuizbookService;
@@ -22,6 +24,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -38,7 +41,7 @@ public class QuizbookController {
     @Operation(summary = "챕터별 문제집 모음 조회 API", description = "챕터가 주어지면 문제집 제목, 설명, 제작자, 문제수를 반환한다.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "OK", content = @Content(array = @ArraySchema(schema = @Schema(implementation = QuizbookResponseDto.class)))),
-            @ApiResponse(responseCode = "401", description = "UNATHORIZED", content = @Content(schema = @Schema(example = "{message: 존재하지 않는 회원입니다.}"))),
+            @ApiResponse(responseCode = "401", description = "UNAUTHORIZED", content = @Content(schema = @Schema(example = "{message: 존재하지 않는 회원입니다.}"))),
             @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content(schema = @Schema(example = "{message: 열람할 수 없는 문제집입니다.}"))),
             @ApiResponse(responseCode = "404", description = "DATA NOT FOUND", content = @Content(schema = @Schema(example = "{message: 존재하지 않는 챕터별 문제집 모음입니다.}")))
     })
@@ -67,7 +70,7 @@ public class QuizbookController {
     @Operation(summary = "문제집 정보 조회 API", description = "문제집 아이디로 문제집 정보를 조회한다.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = QuizbookResponseDto.class))),
-            @ApiResponse(responseCode = "401", description = "UNATHORIZED", content = @Content(schema = @Schema(example = "{message: 존재하지 않는 회원입니다.}"))),
+            @ApiResponse(responseCode = "401", description = "UNAUTHORIZED", content = @Content(schema = @Schema(example = "{message: 존재하지 않는 회원입니다.}"))),
             @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content(schema = @Schema(example = "{message: 열람할 수 없는 문제집입니다.}"))),
             @ApiResponse(responseCode = "404", description = "DATA NOT FOUND", content = @Content(schema = @Schema(example = "{message: 존재하지 않는 문제집입니다.}")))
     })

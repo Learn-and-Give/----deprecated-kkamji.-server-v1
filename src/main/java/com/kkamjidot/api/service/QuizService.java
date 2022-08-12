@@ -1,11 +1,15 @@
 package com.kkamjidot.api.service;
 
+import com.kkamjidot.api.domain.Member;
 import com.kkamjidot.api.domain.Quiz;
+import com.kkamjidot.api.dto.request.UpdateAnswerRequestDto;
+import com.kkamjidot.api.exception.UnauthorizedException;
 import com.kkamjidot.api.repository.QuizRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.management.openmbean.KeyAlreadyExistsException;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -30,5 +34,12 @@ public class QuizService {
 
     public Quiz findOne(Long quizbookId, Integer quizNumber) throws NoSuchElementException {
         return quizRepository.findByQuizbookIdAndQuizNumber(quizbookId, quizNumber).orElseThrow(() -> new NoSuchElementException("존재하지 않는 문제입니다."));
+    }
+
+    @Transactional
+    public Quiz updateOne(Long quizId, Member member, UpdateAnswerRequestDto requestDto) throws UnauthorizedException {
+        Quiz quiz = findOne(quizId);
+        if (!quiz.getIsMine(member)) throw new UnauthorizedException("자신의 문제가 아닙니다.");
+        return quiz.update(requestDto);
     }
 }

@@ -31,5 +31,4 @@ public class CommonExceptionHandler {
     public ResponseEntity handleKeyAlreadyExistsException(KeyAlreadyExistsException e) {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(Map.of("message", e.getMessage()));     // 409 CONFLICT
     }
-
 }
