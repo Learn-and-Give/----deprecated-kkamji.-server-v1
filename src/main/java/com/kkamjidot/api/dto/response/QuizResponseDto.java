@@ -9,6 +9,7 @@ import lombok.Builder;
 import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,6 +38,12 @@ public class QuizResponseDto {
     @Schema(description = "내가 작성자인지 여부", example = "true", required = true)
     private final Boolean isMine;
 
+    @Schema(description = "생성일시", example = "2022-08-11T16:47:25", required = true)
+    private LocalDateTime createdDate;
+
+    @Schema(description = "수정일시", example = "null", required = true)
+    private LocalDateTime modifiedDate;
+
     @Schema(description = "파일", example = "true", required = true)
     private final List<FileResponseDto> files = new ArrayList<>();
 
@@ -49,6 +56,8 @@ public class QuizResponseDto {
                 .quizNumber(quiz.getQuizNumber())
                 .isQuizSolved(quiz.getIsSolved(member))
                 .isMine(quiz.getIsMine(member))
+                .createdDate(quiz.getCreatedDate())
+                .modifiedDate(quiz.getModifiedDate())
                 .build();
         quiz.getFiles().forEach(file -> quizDto.files.add(FileResponseDto.of(file)));
 

@@ -49,7 +49,6 @@ public class Chapter extends BaseTimeEntity {
     }
 
 //    public void verifyApi(Long chapterId) {
-//        if (this.id != chapterId) throw new NoSuchElementException("존재하지 않는 챕터입니다.");
+//        if (!Objects.equals(this.id, chapterId)) throw new NoSuchElementException("존재하지 않는 문제집입니다.");
 //    }
-
 }

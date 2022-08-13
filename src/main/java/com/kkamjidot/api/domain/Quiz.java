@@ -1,6 +1,7 @@
 package com.kkamjidot.api.domain;
 
 import com.kkamjidot.api.domain.enumerate.QuizCategory;
+import com.kkamjidot.api.dto.request.UpdateAnswerRequestDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -9,10 +10,7 @@ import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.time.Instant;
-import java.util.HashMap;
-import java.util.LinkedHashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 @Builder
 @AllArgsConstructor
@@ -63,15 +61,19 @@ public class Quiz extends BaseTimeEntity {
 
     public boolean getIsSolved(Member member) {
         return this.solves.stream()
-                .filter(solve -> solve.getMember().equals(member))
-                .findAny()
-                .isPresent();
+                .anyMatch(solve -> solve.getMember().equals(member));
     }
 
     public boolean getIsMine(Member member) {
         return this.quizbook.getMember().equals(member);
     }
 
+    public Quiz update(UpdateAnswerRequestDto requestDto) {
+        if(requestDto.getQuizAnswer() != null) this.quizAnswer = requestDto.getQuizAnswer();
+        if(requestDto.getQuizExplanation() != null) this.quizExplanation = requestDto.getQuizExplanation();
+        if(requestDto.getQuizSource() != null) this.quizSource = requestDto.getQuizSource();
+        return this;
+    }
 
     public Map<String, Long> verifyApi() {
         HashMap<String, Long> map = new HashMap<>();
@@ -79,4 +81,9 @@ public class Quiz extends BaseTimeEntity {
         map.putAll(this.quizbook.verifyApi());
         return map;
     }
+
+//    public void verifyApi(/*Long quizId,*/Long quizbookId, Long chapterId) throws NoSuchElementException {
+//        // if (!Objects.equals(this.id, quizId)) throw new NoSuchElementException("존재하지 않는 문제입니다.");
+//        this.quizbook.verifyApi(quizbookId, chapterId);
+//    }
 }

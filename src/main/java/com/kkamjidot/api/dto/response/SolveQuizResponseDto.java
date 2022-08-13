@@ -16,13 +16,13 @@ public class SolveQuizResponseDto {
     @Schema(description = "풀기 아이디", example = "1", required = true)
     private Long solveId;
 
-    @Schema(description = "문제 정답 여부", example = "true", required = true)
-    private Boolean solveIsCorrect;
+//    @Schema(description = "문제 정답 여부", example = "true", required = true)
+//    private Boolean solveIsCorrect;
 
     public static SolveQuizResponseDto of(Solve solve) {
         return SolveQuizResponseDto.builder()
                 .solveId(solve.getId())
-                .solveIsCorrect(solve.getSolveIsCorrect())
+//                .solveIsCorrect(solve.getSolveIsCorrect())
                 .build();
     }
 }

@@ -16,16 +16,12 @@ import java.util.NoSuchElementException;
 @Transactional(readOnly = true)
 @Service
 public class VerifyApiService {
-    private final ChapterRepository chapterRepository;
-    private final QuizbookRepository quizbookRepository;
-    private final QuizRepository quizRepository;
-
     public void verifyApiQuizbookToChapter(Quizbook quizbook, Long chapterId) throws NoSuchElementException {
         Map<String, Long> map = quizbook.verifyApi();
         if (!map.get("chapterId").equals(chapterId)) {
             throw new NoSuchElementException("존재하지 않는 문제집입니다.");
         }
-    };
+    }
 
     public void verifyApiQuizToChapter(Quiz quiz, Long quizbookId, Long chapterId) throws NoSuchElementException {
         Map<String, Long> map = quiz.verifyApi();
@@ -36,5 +32,13 @@ public class VerifyApiService {
                 !map.get("chapterId").equals(chapterId)) {
             throw new NoSuchElementException("존재하지 않는 문제입니다.");
         }
-    };
+    }
+
+//    public void verifyApiQuizbookToChapter(Quizbook quizbook, Long chapterId) throws NoSuchElementException {
+//        quizbook.verifyApi(quizbook.getId(), chapterId);
+//    }
+//
+//    public void verifyApiQuizToChapter(Quiz quiz, Long quizbookId, Long chapterId) throws NoSuchElementException {
+//        quiz.verifyApi(quiz.getId(), quizbookId, chapterId);
+//    }
 }
