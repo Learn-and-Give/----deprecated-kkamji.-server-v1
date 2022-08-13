@@ -4,14 +4,12 @@ import com.kkamjidot.api.domain.Member;
 import com.kkamjidot.api.domain.Quiz;
 import com.kkamjidot.api.domain.Solve;
 import com.kkamjidot.api.dto.request.SolveQuizRequestDto;
-import com.kkamjidot.api.dto.response.QuizSummaryResponseDto;
 import com.kkamjidot.api.dto.response.SolveQuizResponseDto;
 import com.kkamjidot.api.service.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
-import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -49,10 +47,10 @@ public class SolveController {
     })
     @PostMapping
     public ResponseEntity<SolveQuizResponseDto> solveQuiz(@RequestHeader(value = "code") String code,
-                                                     @PathVariable(value = "chapterId") Long chapterId,
-                                                     @PathVariable(value = "quizbookId") Long quizbookId,
-                                                     @PathVariable(value = "quizId") Long quizId,
-                                                     @RequestBody @Valid SolveQuizRequestDto request) {
+                                                          @PathVariable(value = "chapterId") Long chapterId,
+                                                          @PathVariable(value = "quizbookId") Long quizbookId,
+                                                          @PathVariable(value = "quizId") Long quizId,
+                                                          @RequestBody @Valid SolveQuizRequestDto request) {
         // 회원 객체 조회 및 인가 체크
         Member member = memberService.findOne(code);
 
@@ -66,7 +64,7 @@ public class SolveController {
         verifyApiService.verifyApiQuizToChapter(quiz, quizbookId, chapterId);
 
         // 문제 풀기
-        Solve solve = solveService.saveSolve(quiz, member, request.getSolveIsCorrect());
+        Solve solve = solveService.saveOne(quiz, member, request.getSolveIsCorrect());
 
         // 응답 객체 생성 및 반환
         return ResponseEntity.ok(SolveQuizResponseDto.of(solve));

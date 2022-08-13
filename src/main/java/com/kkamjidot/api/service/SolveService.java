@@ -9,8 +9,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.management.openmbean.KeyAlreadyExistsException;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -23,7 +21,7 @@ public class SolveService {
 
     // 문제 풀기
     @Transactional
-    public Solve saveSolve(Quiz quiz, Member member, Boolean solveIsCorrect) throws KeyAlreadyExistsException {
+    public Solve saveOne(Quiz quiz, Member member, Boolean solveIsCorrect) throws KeyAlreadyExistsException {
         if (quiz.getIsSolved(member)) throw new KeyAlreadyExistsException("이미 풀었던 문제입니다.");
         return solveRepository.save(Solve.builder()
                         .solveIsCorrect(solveIsCorrect)
