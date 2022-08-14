@@ -194,4 +194,6 @@ public class QuizController {
         // 응답 객체 생성 및 반환
         return ResponseEntity.ok(Map.of("quizId", quiz.getId()));
     }
+
+
 }

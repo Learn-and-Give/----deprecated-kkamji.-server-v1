@@ -55,7 +55,7 @@ public class CommentController {
         Comment comment = commentService.saveOne(requestDto, quiz, member);
 
         // 응답 객체 생성 및 반환
-        return ResponseEntity.created(URI.create("v1/quizzes/{quizId}/comments")).body(CommentResponseDto.of(comment));
+        return ResponseEntity.created(URI.create("v1/quizzes/{quizId}/comments")).body(CommentResponseDto.of(comment, member));
     }
 
     @Operation(summary = "의견 조회 API", description = "문제에 달린 의견들을 생성시간 역순으로 조회한다.")
@@ -67,7 +67,7 @@ public class CommentController {
     public ResponseEntity<List<CommentResponseDto>> readComment(@RequestHeader(value = "code") String code,
                                                                 @PathVariable(value = "quizId") Long quizId) {
         // 회원 객체 조회 및 인가 체크
-        memberService.authorization(code);
+        Member member = memberService.findOne(code);
 
         // 문제 조회
         Quiz quiz = quizService.findOne(quizId);
@@ -76,7 +76,7 @@ public class CommentController {
         List<Comment> comments = commentService.findComments(quiz);
 
         // 응답 객체 생성 및 반환
-        return ResponseEntity.ok(comments.stream().map(CommentResponseDto::of).collect(Collectors.toList()));
+        return ResponseEntity.ok(comments.stream().map(comment -> CommentResponseDto.of(comment, member)).collect(Collectors.toList()));
     }
 
     @Operation(summary = "의견 삭제 API", description = "문제에 달린 의견을 삭제한다.")
@@ -91,11 +91,8 @@ public class CommentController {
     })
     @DeleteMapping("v1/comments/{commentId}")
     public ResponseEntity<?> deleteComment(@RequestHeader(value = "code") String code, @PathVariable(value = "commentId") Long commentId) {
-        // 회원 객체 조회 및 인가 체크
-        memberService.authorization(code);
-
         // 의견 삭제
-        commentService.deleteOne(commentId);
+        commentService.deleteOne(commentId, code);
 
         // 응답 객체 생성 및 반환
         return ResponseEntity.noContent().build();
