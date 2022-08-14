@@ -4,7 +4,8 @@ import com.kkamjidot.api.domain.Quizbook;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface QuizbookRepository extends JpaRepository<Quizbook, Long> {
-    List<Quizbook> findByQuizbookWeek(int week);    // 주차별 문제집 모음 조회
+    List<Quizbook> findAllByChapterId(Long chapterId);    // 주차별 문제집 모음 조회
 }

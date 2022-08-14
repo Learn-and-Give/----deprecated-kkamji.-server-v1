@@ -1,34 +1,38 @@
 package com.kkamjidot.api.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import java.time.Instant;
 
-@Getter
 @Builder
-@AllArgsConstructor(access = AccessLevel.PROTECTED)
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Entity(name = "member")
-public class Member {
-    @Id
-    @Column(name = "member_id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Entity
+@Table(name = "member")
+public class Member extends BaseTimeEntity {
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "member_id", nullable = false)
     private Long id;
-
-    @Column(name = "member_name")
-    private String memberName;
-
-    @Column(name = "member_password")
-    @JsonIgnore
-    private String memberPassword;
 
     @Column(name = "member_university_email")
     private String memberUniversityEmail;
 
     @Column(name = "member_second_email")
     private String memberSecondEmail;
+
+    @Column(name = "member_password", nullable = false)
+    private String memberPassword;
+
+    @Column(name = "member_name", nullable = false)
+    private String memberName;
 
     @Column(name = "member_university")
     private String memberUniversity;
@@ -44,10 +48,4 @@ public class Member {
 
     @Column(name = "member_image_url")
     private String memberImageUrl;
-
-    @Column(name = "created_date")
-    private Instant createdDate;
-
-    @Column(name = "modified_date")
-    private Instant modifiedDate;
 }

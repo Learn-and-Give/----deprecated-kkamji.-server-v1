@@ -1,31 +1,31 @@
-package com.kkamjidot.api.service;
-
-import com.kkamjidot.api.dto.response.QuizbookResponseDto;
-import com.kkamjidot.api.repository.MemberRepository;
-import com.kkamjidot.api.repository.QuizbookRepository;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
-
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
-
-@SpringBootTest
-@ActiveProfiles("local")
-class QuizbookServiceTest {
-    @Autowired
-    QuizbookService quizbookService;
-
-    @Autowired
-    QuizbookRepository quizbookRepository;
-
-    @Autowired
-    MemberRepository memberRepository;
-
-    @Test
-    void 주차별_문제집_모음_조회() {
+//package com.kkamjidot.api.service;
+//
+//import com.kkamjidot.api.dto.response.QuizbookResponseDto;
+//import com.kkamjidot.api.repository.MemberRepository;
+//import com.kkamjidot.api.repository.QuizbookRepository;
+//import org.junit.jupiter.api.Test;
+//import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.boot.test.context.SpringBootTest;
+//import org.springframework.test.context.ActiveProfiles;
+//
+//import java.util.List;
+//
+//import static org.assertj.core.api.Assertions.assertThat;
+//
+//@SpringBootTest
+//@ActiveProfiles("local")
+//class QuizbookServiceTest {
+//    @Autowired
+//    QuizbookService quizbookService;
+//
+//    @Autowired
+//    QuizbookRepository quizbookRepository;
+//
+//    @Autowired
+//    MemberRepository memberRepository;
+//
+//    @Test
+//    void 주차별_문제집_모음_조회() {
 //        //given
 //        memberRepository.save(Member.builder()
 //                .memberName("홍길동")
@@ -62,13 +62,13 @@ class QuizbookServiceTest {
 //                .quizbookWeek(2)
 //                .member(memberRepository.findById(3L).get())
 //                .build());
-
-        //when//
-        //when
-        List<QuizbookResponseDto> quizbooks = quizbookService.findQuizbooksByWeek(1);
-
-        //then
-        System.out.println("quizbooks = " + quizbooks);
-
-    }
-}
+//
+//        //when//
+//        //when
+//        List<QuizbookResponseDto> quizbooks = quizbookService.findQuizbooksByWeek(1);
+//
+//        //then
+//        System.out.println("quizbooks = " + quizbooks);
+//
+//    }
+//}

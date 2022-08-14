@@ -13,12 +13,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.NoHandlerFoundException;
 
 import javax.validation.Valid;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 @RequiredArgsConstructor
-@CrossOrigin(origins = {"http://localhost:3000", "https://kkamjidot.com", "https://www.kkamjidot.com"}) // @CrossOrigin(origins = "*", allowedHeaders = "*")
+//@CrossOrigin(origins = {"http://localhost:3000", "https://kkamjidot.com", "https://www.kkamjidot.com"}) // @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequestMapping("v1")
 @RestController
 public class MemberController {
@@ -27,19 +29,14 @@ public class MemberController {
     @Operation(summary = "로그인 API", description = "회원 여부를 확인한다.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = LoginResponseDto.class))),
-            @ApiResponse(responseCode = "401", description = "UNATHORIZED")
+            @ApiResponse(responseCode = "401", description = "UNAUTHORIZED", content = @Content(schema = @Schema(example = "{message: 존재하지 않는 회원입니다.}")))
     })
     @PostMapping("login")
-    public ResponseEntity<?> login(@RequestBody @Valid LoginRequestDto request) {
-        try {
-            Member member = memberService.login(request.getName(), request.getCode());  // 로그인
-            LoginResponseDto response = LoginResponseDto.builder()      // 응답 객체 생성
-                    .userId(member.getId())
-                    .name(member.getMemberName())
-                    .build();
-            return ResponseEntity.ok(response);
-        } catch (IllegalStateException e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("message", e.getMessage()));     // 존재하지 않는 회원입니다.
-        }
+    public ResponseEntity<LoginResponseDto> login(@RequestBody @Valid LoginRequestDto request) {
+        Member member = memberService.login(request.getName(), request.getCode());  // 로그인
+        LoginResponseDto response = LoginResponseDto.of(member);
+        return ResponseEntity.ok(response);
     }
 }
+
+
