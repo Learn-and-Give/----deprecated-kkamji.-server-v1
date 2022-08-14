@@ -194,32 +194,32 @@ public class QuizController {
         return ResponseEntity.ok(Map.of("quizId", quiz.getId()));
     }
 
-    @Operation(summary = "문제 제출 API", description = "문제를 제출한다.")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "OK", content = @Content(array = @ArraySchema(schema = @Schema(implementation = CreateQuizResponseDto.class)))),
-            @ApiResponse(responseCode = "401", description = "UNAUTHORIZED", content = @Content(schema = @Schema(example = "{message: 존재하지 않는 회원입니다.}"))),
-    })
-    @Parameters({
-            @Parameter(name = "code", description = "로그인한 회원 코드", required = true, in = ParameterIn.HEADER, example = "1234"),
-            @Parameter(name = "quizId", description = "문제 아이디", required = true, in = ParameterIn.PATH, example = "1"),
-    })
-    @PatchMapping("v1/quizbooks/{quizbookId}/quizzes")
-    public ResponseEntity<CreateQuizResponseDto> createQuiz(@RequestHeader(value = "code") String code,
-                                                            @RequestBody @Valid CreateQuizRequestDto requestDto,
-                                                            MultipartFile[] uploadFiles) {
-        // 회원 객체 조회 및 인가 체크
-        Member member = memberService.findOne(code);
-
-        // 문제집 조회 *Deprecated*
-        Quizbook quizbook = quizbookService.findOne(member);
-
-        // 문제 수정
-        Long id = quizService.createOne(requestDto, quizbook);
-
-
-
-
-        // 응답 객체 생성 및 반환
-        return ResponseEntity.ok(CreateQuizResponseDto.builder().quizId(id).build());
-    }
+//    @Operation(summary = "문제 제출 API", description = "문제를 제출한다.")
+//    @ApiResponses(value = {
+//            @ApiResponse(responseCode = "200", description = "OK", content = @Content(array = @ArraySchema(schema = @Schema(implementation = CreateQuizResponseDto.class)))),
+//            @ApiResponse(responseCode = "401", description = "UNAUTHORIZED", content = @Content(schema = @Schema(example = "{message: 존재하지 않는 회원입니다.}"))),
+//    })
+//    @Parameters({
+//            @Parameter(name = "code", description = "로그인한 회원 코드", required = true, in = ParameterIn.HEADER, example = "1234"),
+//            @Parameter(name = "quizId", description = "문제 아이디", required = true, in = ParameterIn.PATH, example = "1"),
+//    })
+//    @PostMapping("v1/quizbooks/{quizbookId}/quizzes")
+//    public ResponseEntity<CreateQuizResponseDto> createQuiz(@RequestHeader(value = "code") String code,
+//                                                            @RequestBody @Valid CreateQuizRequestDto requestDto,
+//                                                            MultipartFile[] uploadFiles) {
+//        // 회원 객체 조회 및 인가 체크
+//        Member member = memberService.findOne(code);
+//
+//        // 문제집 조회 *Deprecated*
+//        Quizbook quizbook = quizbookService.findOne(member);
+//
+//        // 문제 수정
+//        Long id = quizService.createOne(requestDto, quizbook);
+//
+//
+//
+//
+//        // 응답 객체 생성 및 반환
+//        return ResponseEntity.ok(CreateQuizResponseDto.builder().quizId(id).build());
+//    }
 }
