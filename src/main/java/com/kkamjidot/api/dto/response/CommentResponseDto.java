@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @Getter
 @Builder
 @Schema(name = "의견 응답 Dto")
-public class CommentResponseDto  implements Serializable {
+public class CommentResponseDto implements Serializable {
     @Schema(description = "의견 아이디", example = "1", required = true)
     private final Long commentId;
 

@@ -14,5 +14,5 @@ import java.io.Serializable;
 public class CommentRequestDto {
     @Schema(description = "의견 내용", example = "의견 내용", required = true)
     @NotNull(message = "의견 내용은 필수 입력 값입니다.")
-    private String cmtContent;
+    private String commentContent;
 }

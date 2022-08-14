@@ -22,7 +22,7 @@ public class CommentService {
     @Transactional
     public Comment saveOne(CommentRequestDto requestDto, Quiz quiz, Member member) {
         Comment comment = new Comment().builder()
-                .cmtContent(requestDto.getCmtContent())
+                .cmtContent(requestDto.getCommentContent())
                 .quiz(quiz)
                 .member(member)
                 .build();
