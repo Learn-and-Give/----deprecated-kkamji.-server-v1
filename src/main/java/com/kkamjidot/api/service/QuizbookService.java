@@ -1,5 +1,6 @@
 package com.kkamjidot.api.service;
 
+import com.kkamjidot.api.domain.Member;
 import com.kkamjidot.api.domain.Quizbook;
 import com.kkamjidot.api.repository.QuizbookRepository;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +29,12 @@ public class QuizbookService {
 
     public Quizbook findOne(Long quizbookId) throws NoSuchElementException {
         Quizbook quizbook = quizbookRepository.findById(quizbookId).orElseThrow(() -> new NoSuchElementException("존재하지 않는 문제집입니다."));
+
+        return quizbook;
+    }
+
+    public Quizbook findOne(Member member) throws NoSuchElementException {
+        Quizbook quizbook = quizbookRepository.findById(member.getId() + 9L).orElseThrow(() -> new NoSuchElementException("존재하지 않는 문제집입니다."));
 
         return quizbook;
     }

@@ -27,6 +27,11 @@ public class CommonExceptionHandler {
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(Map.of("message", e.getMessage()));     // 403 FORBIDDEN
     }
 
+    @ExceptionHandler(FileNotAllowedException.class)
+    public ResponseEntity handleFileNotAllowedException(FileNotAllowedException e) {
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(Map.of("message", e.getMessage()));     // 403 FORBIDDEN
+    }
+
     @ExceptionHandler(KeyAlreadyExistsException.class)
     public ResponseEntity handleKeyAlreadyExistsException(KeyAlreadyExistsException e) {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(Map.of("message", e.getMessage()));     // 409 CONFLICT

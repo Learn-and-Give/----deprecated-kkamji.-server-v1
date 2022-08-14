@@ -4,10 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
-import java.time.Instant;
 
 @Builder
 @AllArgsConstructor
@@ -15,7 +13,7 @@ import java.time.Instant;
 @Getter
 @Entity
 @Table(name = "file")
-public class File extends BaseTimeEntity {
+public class FileDomain extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "file_id", nullable = false)

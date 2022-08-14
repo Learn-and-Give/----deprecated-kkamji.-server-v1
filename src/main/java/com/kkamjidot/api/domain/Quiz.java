@@ -1,6 +1,7 @@
 package com.kkamjidot.api.domain;
 
 import com.kkamjidot.api.domain.enumerate.QuizCategory;
+import com.kkamjidot.api.dto.request.CreateQuizRequestDto;
 import com.kkamjidot.api.dto.request.UpdateAnswerRequestDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -57,7 +58,7 @@ public class Quiz extends BaseTimeEntity {
     private Set<Solve> solves = new LinkedHashSet<>();
 
     @OneToMany(mappedBy = "quiz")
-    private Set<File> files = new LinkedHashSet<>();
+    private Set<FileDomain> files = new LinkedHashSet<>();
 
     public boolean getIsSolved(Member member) {
         return this.solves.stream()
@@ -86,4 +87,16 @@ public class Quiz extends BaseTimeEntity {
 //        // if (!Objects.equals(this.id, quizId)) throw new NoSuchElementException("존재하지 않는 문제입니다.");
 //        this.quizbook.verifyApi(quizbookId, chapterId);
 //    }
+
+    public static Quiz of(CreateQuizRequestDto requestDto, Quizbook quizbook) {
+        return Quiz.builder()
+                .quizTitle(requestDto.getQuizTitle())
+                .quizContent(requestDto.getQuizContent())
+                .quizAnswer(requestDto.getQuizAnswer())
+                .quizExplanation(requestDto.getQuizExplanation())
+                .quizSource(requestDto.getQuizSource())
+//                .quizCategory(QuizCategory.BASIC)
+                .quizbook(quizbook)
+                .build();
+    }
 }

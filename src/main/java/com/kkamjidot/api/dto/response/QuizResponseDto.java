@@ -1,6 +1,5 @@
 package com.kkamjidot.api.dto.response;
 
-import com.kkamjidot.api.domain.File;
 import com.kkamjidot.api.domain.Member;
 import com.kkamjidot.api.domain.Quiz;
 import com.kkamjidot.api.domain.enumerate.QuizCategory;

@@ -2,9 +2,13 @@ package com.kkamjidot.api.service;
 
 import com.kkamjidot.api.domain.Member;
 import com.kkamjidot.api.domain.Quiz;
+import com.kkamjidot.api.domain.Quizbook;
+import com.kkamjidot.api.dto.request.CreateQuizRequestDto;
 import com.kkamjidot.api.dto.request.UpdateAnswerRequestDto;
+import com.kkamjidot.api.dto.response.CreateQuizResponseDto;
 import com.kkamjidot.api.exception.UnauthorizedException;
 import com.kkamjidot.api.repository.QuizRepository;
+import com.kkamjidot.api.repository.QuizbookRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,5 +45,11 @@ public class QuizService {
         Quiz quiz = findOne(quizId);
         if (!quiz.getIsMine(member)) throw new UnauthorizedException("자신의 문제가 아닙니다.");
         return quiz.update(requestDto);
+    }
+
+    @Transactional
+    public Long createOne(CreateQuizRequestDto responseDto, Quizbook quizbook) {
+        Quiz quiz = Quiz.of(responseDto, quizbook);
+        return quizRepository.save(quiz).getId();
     }
 }
