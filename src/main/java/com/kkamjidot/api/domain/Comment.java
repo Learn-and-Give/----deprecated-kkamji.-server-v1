@@ -35,4 +35,8 @@ public class Comment extends BaseTimeEntity {
     public void delete() {
         this.deletedDate = LocalDateTime.now();
     }
+
+    public boolean getIsMine(Member member) {
+        return this.member.equals(member);
+    }
 }

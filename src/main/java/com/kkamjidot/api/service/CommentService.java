@@ -34,7 +34,7 @@ public class CommentService {
     }
 
     @Transactional
-    public void deleteOne(Long commentId) throws NoSuchElementException {
-        commentRepository.findById(commentId).orElseThrow(() -> new NoSuchElementException("존재하지 않는 의견입니다.")).delete();;
+    public void deleteOne(Long commentId, String code) throws NoSuchElementException {
+        commentRepository.findByIdAndMember_MemberPassword(commentId, code).orElseThrow(() -> new NoSuchElementException("존재하지 않는 의견입니다.")).delete();
     }
 }

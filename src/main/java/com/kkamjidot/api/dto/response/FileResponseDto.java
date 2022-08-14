@@ -1,6 +1,6 @@
 package com.kkamjidot.api.dto.response;
 
-import com.kkamjidot.api.domain.File;
+import com.kkamjidot.api.domain.FileDomain;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Getter;
@@ -22,7 +22,7 @@ public class FileResponseDto {
 
     @Schema(description = "수정일시", example = "null", required = true)
     private LocalDateTime modifiedDate;
-    public static FileResponseDto of(File file) {
+    public static FileResponseDto of(FileDomain file) {
         return FileResponseDto.builder()
                 .fileName(file.getFileName())
                 .filePath(file.getFilePath())
