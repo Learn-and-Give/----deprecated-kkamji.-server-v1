@@ -68,8 +68,6 @@ public class QuizController {
         return ResponseEntity.ok(quizzes.stream().map(quiz -> QuizSummaryResponseDto.of(quiz, member)).collect(Collectors.toList()));
     }
 
-
-
     @Operation(summary = "문제 조회 API", description = "문제의 정보와 내용을 조회한다.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "OK", content = @Content(array = @ArraySchema(schema = @Schema(implementation = QuizResponseDto.class)))),
